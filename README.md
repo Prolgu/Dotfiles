@@ -1,7 +1,7 @@
 # Dotfiles
 ## Mis archivos de configuracion
 
-###Setup actual:
+### Setup actual:
 * Arch Linux
 * Zsh
 * Nvim
