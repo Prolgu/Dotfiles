@@ -1,46 +1,32 @@
-function! TermJS() abort
-    set splitbelow
-    exec winheight(0)/4."split"|:w | terminal node %
-    "exec "vsp" | term node %
-    set nonumber
-    set norelativenumber
-    set signcolumn=no
-    startinsert!
-endfunction
 
-" Terminal Function
-let g:term_buf = 0
-let g:term_win = 0
-function! TermToggle(height) abort
-    if win_gotoid(g:term_win)
-        hide
-    else
-        botright new
-        exec "resize " . a:height
-        try
-            exec "buffer " . g:term_buf 
-        catch
-            call termopen('node', {"detach": 0})
-            let g:term_buf = bufnr("")
-            set nonumber
-            set norelativenumber
-            set signcolumn=no
-        endtry
-        startinsert!
-        let g:term_win = win_getid()
-    endif
-endfunction
+"============================================="
+"*********************************************"
+"              JAVASCRIPT-VIM                 "
+"*********************************************"
+"============================================="
 
+ set tabstop=2 
+ set softtabstop=2 
+ set shiftwidth=2 
+ set textwidth=120 
+ set fileformat=unix 
+
+" In ~/.vim/ftplugin/javascript.vim, or somewhere similar.
+
+" Enable ESLint only for JavaScript.
+" let b:ale_linters = ['xo']
+
+" Equivalent to the above.
+let b:ale_linters = {'javascript': ['tsserver']}
+
+ let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\} 
 
 "********* Map-Zone ***********"
 
-" Toggle terminal on/off (neovim)
-nnoremap <buffer> <A-t> :call TermToggle(10)<CR>
-inoremap <buffer> <A-t> <Esc>:call TermToggle(10)<CR>
-tnoremap <buffer> <A-t> <C-\><C-n>:call TermToggle(10)<CR>
-
-"noremap <buffer> <F5> :call TermJS()<Cr>
-noremap <buffer> <F5> :FloatermNew node %<Cr>
+noremap <buffer> <F5> :w! <bar> :JSREPL<Cr>
 
 "******** Autocompletar *******"
 
@@ -53,4 +39,26 @@ inoremap <buffer>{ {}<Esc>i
 inoremap <buffer>{<Cr> {<Cr>}<Esc>O
 "inoremap <buffer>< <><Esc>i
 "inoremap <buffer>{ {<Cr>}<Esc>O
+
+" wrap the current line in (), e.g:
+" nnoremap (( mMI(<esc>A)<esc>`M
+
+" wrap the rest of the line in ()
+nnoremap ) mMi(<esc>A)<esc>`M
+
+" wrap the line so far in ()
+nnoremap () mMI(<esc>`Mla)<esc>
+
+nnoremap ( bcw()<Esc>P
+nnoremap ' bcw''<Esc>P
+
+nnoremap " mMi'<esc>A'<esc>`M
+
+nnoremap <leader>` mMi`<esc>A`<esc>`M
+" nnoremap <leader>' mMi'<esc>A'<esc>`M
+nnoremap <leader>z $bi('<esc>eli');<esc>o
+nnoremap <space>  i<space><esc>
+
+nnoremap ; $a;<esc>
+
 

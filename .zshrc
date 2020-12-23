@@ -18,11 +18,10 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 '
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 #export FZF_CTRL_R_OPTS='--sort --exact'
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+#export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 #export BAT_THEME='Solarized (dark)'
-#export FZF_CTRL_R_OPTS='--sort --exact'
-#export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 #export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -135,7 +134,7 @@ fzf-history-widget-accept() {
   zle accept-line
 }
 zle     -N     fzf-history-widget-accept
-bindkey '^X^R' fzf-history-widget-accept
+bindkey '^R' fzf-history-widget-accept
 
 # funcion ara abrir archivos con editor
 #_open_files_for_editing() {
@@ -167,3 +166,4 @@ bindkey '^X^R' fzf-history-widget-accept
 
 #alias ef='open_files_for_editing'     # 'ef' opens given file(s) for editing
 ################################################################################
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,9 +1,15 @@
+"*************************************************"
 
+"================================================="
+"                  lightline                      "
+"==================================================
+
+"*************************************************"
 let g:lightline = {
-\'colorscheme': 'dark_plus_alter',
+\'colorscheme': 'ayu_dark',
 \'active': {
-\       'left': [ [ 'mode', 'paste' ], ['filename'], [ 'statuslinetabs' ] ],
-\       'right' :[['lineinfo'],['filetype','gitbranch']]
+\       'left': [ [ 'mode','paste' ], ['filename'], [ 'cocstatus', 'currentfunction','statuslinetabs' ] ],
+\       'right' :[['gitbranch','percent'],['filetype']]
 \           },
 \'subseparator': {
 \       'left': '', 'right': ''   
@@ -13,7 +19,7 @@ let g:lightline = {
 \           },
 \'tabline': {
 \       'left': [ ['buffers'] ],
-\       'right': [['smarttabs','close']]
+\       'right': [['smarttabs']]
 \           },
 \'component_expand': {
 \       'buffers': 'lightline#bufferline#buffers',
@@ -32,6 +38,8 @@ let g:lightline = {
 \       'gitbranch': 'LightlineGitbranch',
 \       'readonly': 'LightlineReadonly',
 \       'modified': 'LightlineModified',
+\       'cocstatus': 'coc#status',
+\       'currentfunction': 'CocCurrentFunction',
 \       'filetype': 'LightlineFiletype',
 \           },
 \ }
@@ -98,11 +106,11 @@ function! LightlineFilename() abort
     let l:tail = expand('%:t')
     let l:noname = 'No Name'
 
-    if winwidth(0) < 50
+    if winwidth(0) < 30
         return ''
     endif
 
-    if winwidth(0) < 86
+    if winwidth(0) < 56
         return l:tail ==# '' ? l:noname : s:trim(l:maxlen, l:tail)
     endif
 
@@ -110,7 +118,7 @@ function! LightlineFilename() abort
 endfunction
 
 function! LightlineModified() abort
-    return &modified ? '●' : ''
+    return &modified ? '+' : ''
 endfunction
 
 function! LightlineMode() abort
@@ -143,7 +151,7 @@ endfunction
 function! SmartTabsIndicator() abort
     let tabs = lightline#tab#tabnum(tabpagenr())
     let tab_total = tabpagenr('$')
-    return tabpagenr('$') >= 1 ? (' Tab: ' . tabs . '/' . tab_total) : ''
+    return tabpagenr('$') >= 1 ? ('Buffers: ' . tabs . '/' . tab_total) : ''
 endfunction
 
 
@@ -159,7 +167,7 @@ endfunction
 let g:lightline#bufferline#unnamed = 'Nuevo'
 "let g:lightline#bufferline#filename_modifier= ':.'
 let g:lightline#bufferline#more_buffers = '...'
-let g:lightline#bufferline#modified = ' ●'
+let g:lightline#bufferline#modified = ' +'
 let g:lightline#bufferline#read_only = ' '
 let g:lightline#bufferline#shorten_path = 1
 let g:lightline#bufferline#show_number = 0
@@ -172,4 +180,18 @@ let g:lightline_foobar_bold = 1
 let g:lightline#trailing_whitespace#indicator = ''
 "autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
+ function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
 
+" let g:lightline = {
+"       \ 'colorscheme': 'wombat',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'cocstatus': 'coc#status',
+"       \   'currentfunction': 'CocCurrentFunction'
+"       \ },
+"       \ }

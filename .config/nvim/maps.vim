@@ -1,31 +1,46 @@
-"********** Mapleader ***********"
+"*********************************************"
+"============================================="
+"                 Nvim-Maps                   "
+"============================================="
+"*********************************************"
+
+
+
+
+"**************** Mapleader ******************"
 let mapleader=','
-
-"*********** Mapeo *************
-
-"************ Corrector  ************"
-nnoremap <silent> <F11> :set spell!<cr>
-inoremap <silent> <F11> <C-O>:set spell!<cr>
 
 "nnoremap <silent> <F10> :update<Bar>silent ! start %:p<CR>
 
 "nnoremap <F7> :sp<bar>term<cr><c-w>J:resize10<cr>
 
+"********* Help en <F1>  **********"
+" map <F1> "zyiw:exe "h ".@z.""<CR>  
+inoremap <F1> <nop>
+
 "********* Terminal **********"
 
 nnoremap <F4> :FloatermNew --autoclose=2<CR>
 
-"********* NerdTree ***********"
+"***************** NerdTree *****************"
 
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <F3> :NERDTreeToggle<CR>
 
-"*********** Guardar y salir *******
+"********************************************"
+
+noremap  <silent> <F12> <Esc>:FloatermToggle<CR>
+noremap! <silent> <F12> <Esc>:FloatermToggle<CR>
+tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
+"************** Guardar y salir *************
 
 nnoremap <C-s> :w<Cr>
 nnoremap <C-x> :q!<Cr>
+
 "********* Buff close ***********"
 nnoremap q :bd<Cr>
+nnoremap Q :q!<Cr>
+
 "************* Tabs *************"
 
 nnoremap <S-Tab> :bn <Cr>
@@ -38,11 +53,11 @@ nnoremap <silent> <S-t> :tabnew<CR>
 
 "********** Templates **********"
 
-nmap <Leader>1 :call Templates(1)<Cr> 
-nmap <Leader>2 :call Templates(2)<Cr>
-nmap <Leader>3 :call Templates(3)<Cr>
-nmap <Leader>4 :call Templates(4)<Cr>
-nmap <leader>5 :call Templates(5)<Cr>
+" nmap <Leader>1 :call Templates(1)<Cr> 
+" nmap <Leader>2 :call Templates(2)<Cr>
+" nmap <Leader>3 :call Templates(3)<Cr>
+" nmap <Leader>4 :call Templates(4)<Cr>
+" nmap <leader>5 :call Templates(5)<Cr>
 
 
 "emulacion de terminal
@@ -59,20 +74,22 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <Leader>. :echo expand('%:p:h')<CR>
 "********** Indent guide ************"
 
-nnoremap <leader>n :call IndentGuides()<cr>
-
+nnoremap <leader>in :call IndentGuides()<cr>
 "************* Split ***************"
 
 "noremap <Leader>h :<C-u>split<CR>
 "noremap <Leader>v :<C-u>vsplit<CR>
-
 "************** Resize *************"
 
 noremap <C-Up> :resize +2<CR>
 noremap <C-Down> :resize -2<CR>
 noremap <C-Left> :vertical resize +2<CR>
 noremap <C-Right> :vertical resize -2<CR>
+"***********************************"
 
+" vnoremap <leader>' gc
+" nnoremap <leader>' gc
+"***********************************"
 
 "******* Cambio de ventanas ********
 
@@ -95,18 +112,23 @@ noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
+nnoremap <PageUp> <C-u>
+nnoremap <PageDown> <C-d>
+inoremap <PageUp> <nop>
+inoremap <PageDown> <nop>
+noremap j gj
+noremap k gk
 
 "inoremap <up> <nop>
 "inoremap <down> <nop>
 "inoremap <left> <nop>
 "inoremap <right> <nop>
 
-map <C-V> "+gP
+imap <C-V> "+gP
 "map q <nop>
 
-
+" map <leader>f 
 "*********** FzF *************"
-nnoremap <leader>te :LoadTemplate<Cr>
 map <silent> <C-f> :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 "nnoremap <leader>g :Files<CR>
@@ -121,8 +143,12 @@ nnoremap <leader>hi :History<CR>
 nnoremap <leader>hh :History:<CR>
 nnoremap <leader>c :call fzf#vim#commands()<Cr>
 "nnoremap <leader>:Rg /usr/share/nvim/runtime/doc/<Cr>
-"
-"
+
+"********** Templates **********"
+
+nnoremap <leader>te :LoadTemplate<Cr>
+nnoremap <leader>nb :FZFNeigh<Cr>
+
 "function! SearchWithAgInDirectory(...)
 "   call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf#vim#default_layout))
 "endfunction
@@ -131,4 +157,40 @@ nnoremap <leader>c :call fzf#vim#commands()<Cr>
 "
 "
 " choose from templates and apply to file
-"
+" Open files in horizontal split
+" nnoremap <silent> <Leader>s :call fzf#run({
+" \   'down': '40%',
+" \   'sink': 'botright split' })<CR>
+
+" Open files in vertical horizontal split
+" nnoremap <silent> <Leader>v :call fzf#run({
+" \   'right': winwidth('.') / 2,
+" \   'sink':  'vertical botright split' })<CR>
+
+
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+" nnoremap <silent> <Leader>. :call fzf#run({
+" \   'source':  reverse(<sid>buflist()),
+" \   'sink':    function('<sid>bufopen'),
+" \   'options': '+m',
+" \   'down':    len(<sid>buflist()) + 2
+" \ })<CR>
+
+command! FZFMru call fzf#run({
+\  'source':  v:oldfiles,
+\  'sink':    'e',
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+
+
+

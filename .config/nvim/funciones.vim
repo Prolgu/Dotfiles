@@ -12,6 +12,92 @@ function! IndentGuides() abort
 endfunction
 hi def IndentGuides guibg=#303030
 
+
+function! BrowserPreview() abort
+    exec "w"
+    if &modified
+        let tmpfile = tempname()
+        execute "silent write " . tmpfile
+        call system("firefox " . shellescape(tmpfile))
+        if delete(tmpfile) != 0
+            echoerr "could not remove " . tmpfile
+        endif
+    else
+        call system("firefox " . shellescape(expand("%:p")))
+    endif
+endfunction
+
+function! Salt() abort
+    " let l:Command = expand("<cfile>")
+   " execute "tabnew " . l:Command
+execute "tabnew ".expand("<cfile>")
+endfunction
+
+function! JumpToCSS() abort
+  let id_pos = searchpos("id", "nb", line('.'))[1]
+  let class_pos = searchpos("class", "nb", line('.'))[1]
+
+  if class_pos > 0 || id_pos > 0
+    if class_pos < id_pos
+      execute ":vim '#".expand('<cword>')."' **/*.css"
+    elseif class_pos > id_pos
+      execute ":vim '.".expand('<cword>')."' **/*.css"
+    endif
+  endif
+endfunction
+
+"************** Registro ****************"
+
+function! Reg()
+    reg
+    echo "Register: "
+    let char = nr2char(getchar())
+    if char != "\<Esc>"
+        execute "normal! \"".char."p"
+    endif
+    redraw
+endfunction
+
+" command! -nargs=0 Reg call Reg()
+
+"******* Hex/Norm ********
+
+noremap <F10> :call HexMe()<CR>
+let $in_hex=0
+function! HexMe()
+    set binary
+    set noeol
+    if $in_hex>0
+        :%!xxd -r
+        let $in_hex=0
+    else
+        :%!xxd
+    let $in_hex=1
+    endif
+endfunction
+
+"============================ Floaterm ============================="
+
+command! PyREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (python %)
+command! JSREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (node %)
+
+"=================================================================="
+"****************************** OLD *******************************"
+"=================================================================="
+
+function! Templates(key) abort
+let numt ={
+            \"1":"~/.vimtemplates/py.template",
+            \"2":"~/.vimtemplates/sh.template",
+            \"3":"~/.vimtemplates/c.template",
+            \"4":"~/.vimtemplates/cpp.template",
+            \"5":"~/.vimtemplates/html.template",
+            \}
+
+     exec "0r".get(numt,a:key)
+endfunction
+
+
 "*******************************"
 
 function! Term() abort
@@ -45,49 +131,6 @@ function! TermToggle(height) abort
         startinsert!
         let g:term_win = win_getid()
     endif
-endfunction
-
-
-"******* Templates ********
-
-function! s:read_template_into_buffer(template) abort
-	" has to be a function to avoid the extra space fzf#run insers otherwise
-	execute '0r ~/.vimtemplates/'.a:template
-endfunction
-
-command! -bang -nargs=* LoadTemplate call fzf#run({
-			\   'source': 'ls -1 ~/.vimtemplates',
-			\   'down': 15,
-			\   'sink': function('<sid>read_template_into_buffer'),
-            \   'window': { 'width': 0.2, 'height': 0.3,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } })
-
-
-function! s:fzf_neighbouring_files() abort
-  let current_file =expand("%")
-  let cwd = fnamemodify(current_file, ':p:h')
-  let command = 'ag -g "" -f ' . cwd . ' --depth 0'
-  let shape =   { 'width': 0.4, 'height': 0.3,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } 
-  call fzf#run({
-        \ 'source': command,
-        \ 'sink':   'e',
-        \ 'options': '-m -x +s',
-        \ 'window': shape})
-endfunction
-
-command! FZFNeigh call s:fzf_neighbouring_files()
-
-"************** OLD *****************"
-
-function! Templates(key) abort
-let numt ={
-            \"1":"~/.vimtemplates/py.template",
-            \"2":"~/.vimtemplates/sh.template",
-            \"3":"~/.vimtemplates/c.template",
-            \"4":"~/.vimtemplates/cpp.template",
-            \"5":"~/.vimtemplates/html.template",
-            \}
-
-     exec "0r".get(numt,a:key)
 endfunction
 
 

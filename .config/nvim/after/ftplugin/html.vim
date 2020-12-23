@@ -1,16 +1,25 @@
-function! BrowserPreview() abort
-    exec "w"
-    if &modified
-        let tmpfile = tempname()
-        execute "silent write " . tmpfile
-        call system("firefox " . shellescape(tmpfile))
-        if delete(tmpfile) != 0
-            echoerr "could not remove " . tmpfile
-        endif
-    else
-        call system("firefox " . shellescape(expand("%:p")))
-    endif
-endfunction
+
+"============================================="
+"*********************************************"
+"                 HTML-VIM                    "
+"*********************************************"
+"============================================="
+
+ set tabstop=2 
+ set softtabstop=2 
+ set shiftwidth=2 
+ set textwidth=120 
+ set fileformat=unix 
+
+
+
+
+"============================================="
+"************** HTML- Maps *******************"
+"============================================="
+
+nnoremap gf :call Salt()<Cr>
+nnoremap gr :call JumpToCSS()<Cr><Cr>
 
 inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%<C-o>i
 nnoremap <buffer> <leader>6 :r ~/.vimtemplates/ipsum.template<Cr>
@@ -20,3 +29,4 @@ nnoremap <buffer> <F5> :w <Bar> !xdg-open %<CR>
 inoremap <buffer> <leader>b <br/>
 
 inoremap <buffer>" ""<Esc>i
+
