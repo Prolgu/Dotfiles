@@ -7,9 +7,7 @@ set nornu
 syntax off
 set spelllang=es,cjk
 
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set expandtab
+set ts=4 sts=4 sw=4 expandtab
 set backspace=indent,eol,start
 
 "********************************************************
@@ -28,7 +26,7 @@ set backspace=indent,eol,start
 nnoremap <silent> <F7> :set spell!<cr>
 inoremap <silent> <F7> <C-O>:set spell!<cr>
 
-
+inoremap <buffer>~n  ñ
 inoremap <buffer>( ()<Esc>i
 inoremap <buffer>[ []<Esc>i
 inoremap <buffer>' ''<Esc>i

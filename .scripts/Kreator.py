@@ -25,12 +25,20 @@ os.makedirs(path+pro+"/img",exist_ok=True)
 fcss= open("{0}{1}/css/master.css".format(path,pro),"w+")
 findex= open("{0}{1}/index.html".format(path,pro),"w+")
 fjs= open("{0}{1}/myScript.js".format(path,pro),"w+")
+fjs.close()
 
-tmplt=os.path.expanduser("~/.scripts/tmplt")
+tmplt=os.path.expanduser("~/.vimtemplates/html")
 fndx=os.path.expanduser(path+pro+"/index.html")
+
 with open(tmplt) as f:
     with open(fndx, "w") as f1:
         for line in f:
             f1.write(line)
 
 
+tmplt=os.path.expanduser("~/.vimtemplates/css")
+fcss=os.path.expanduser(path+pro+"/css/master.css")
+with open(tmplt) as f:
+    with open(fcss, "w") as f1:
+        for line in f:
+            f1.write(line)

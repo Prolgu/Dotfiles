@@ -1,32 +1,34 @@
-
 "============================================="
-"*********************************************"
 "              JAVASCRIPT-VIM                 "
-"*********************************************"
 "============================================="
 
- set tabstop=2 
- set softtabstop=2 
- set shiftwidth=2 
- set textwidth=120 
- set fileformat=unix 
+" lua <<EOF
+"   local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
+"   local g = vim.g      -- a table to access global variables
+"   local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+"   local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 
-" In ~/.vim/ftplugin/javascript.vim, or somewhere similar.
+"   local function opt(scope, key, value)
+"     scopes[scope][key] = value
+"     if scope ~= 'o' then scopes['o'][key] = value end
+"   end
 
-" Enable ESLint only for JavaScript.
-" let b:ale_linters = ['xo']
+"   opt('b','expandtab',true)
+"   opt('b','tabstop', 2)
+"   opt('b','softtabstop',2)
+"   opt('b','shiftwidth',2)
+"   opt('b','textwidth',120)
 
-" Equivalent to the above.
-let b:ale_linters = {'javascript': ['tsserver']}
+" EOF
 
- let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'css': ['prettier'],
-\} 
+ set ts=2 sts=2 sw=2 
+ set expandtab tw=120 
+ set backspace=indent,eol,start
+"============================================="
 
-"********* Map-Zone ***********"
-
-noremap <buffer> <F5> :w! <bar> :JSREPL<Cr>
+" Documentacion de referencias w3schools/JavaScript
+nnoremap <buffer> <F1> :w <Bar> !xdg-open https://www.w3schools.com/jsref/default.asp<Cr><Cr>
+noremap <buffer> <F5> :w! <bar> :JsREPL<Cr>
 
 "******** Autocompletar *******"
 
@@ -62,3 +64,18 @@ nnoremap <space>  i<space><esc>
 nnoremap ; $a;<esc>
 
 
+"============================================="
+" In ~/.vim/ftplugin/javascript.vim, or somewhere similar.
+
+" Enable ESLint only for JavaScript.
+" let b:ale_linters = ['xo']
+
+" Equivalent to the above.
+" let b:ale_linters = {'javascript': ['tsserver']}
+
+"  let g:ale_fixers = {
+" \   'javascript': ['prettier'],
+" \   'css': ['prettier'],
+" \} 
+
+"============================================="

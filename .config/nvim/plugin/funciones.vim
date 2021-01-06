@@ -1,3 +1,21 @@
+"==============================================="
+
+function! s:share() range
+  let n=@n
+  silent! normal gv"ny
+  let out= system("echo '".@n."' | curl --silent --data-binary @- https://paste.rs")
+  let @n =n
+  " normal `>
+  " put=''
+  " put='Share:'
+  " put=out
+  exec "!xdg-open ".out
+endfunction
+
+command! -range Share :call s:share()<Cr>
+
+
+
 
 "******** Indent *********"
 let g:indentguides_state = 0
@@ -30,7 +48,7 @@ endfunction
 function! Salt() abort
     " let l:Command = expand("<cfile>")
    " execute "tabnew " . l:Command
-execute "tabnew ".expand("<cfile>")
+  execute "tabnew ".expand("<cfile>")
 endfunction
 
 function! JumpToCSS() abort
@@ -79,7 +97,8 @@ endfunction
 "============================ Floaterm ============================="
 
 command! PyREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (python %)
-command! JSREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (node %)
+command! JsREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (node %)
+command! LuaREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (lua %)
 
 "=================================================================="
 "****************************** OLD *******************************"
@@ -87,11 +106,11 @@ command! JSREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --posi
 
 function! Templates(key) abort
 let numt ={
-            \"1":"~/.vimtemplates/py.template",
-            \"2":"~/.vimtemplates/sh.template",
-            \"3":"~/.vimtemplates/c.template",
-            \"4":"~/.vimtemplates/cpp.template",
-            \"5":"~/.vimtemplates/html.template",
+            \"1":"~/.vimtemplates/py",
+            \"2":"~/.vimtemplates/sh",
+            \"3":"~/.vimtemplates/c",
+            \"4":"~/.vimtemplates/cpp",
+            \"5":"~/.vimtemplates/html",
             \}
 
      exec "0r".get(numt,a:key)

@@ -1,29 +1,28 @@
 
 "============================================="
-"                  VIM-VIM                    "
+"                  LUA-VIM                    "
 "============================================="
 
 
 "============================================="
-
-set tabstop=2 softtabstop=2
-set shiftwidth=2
+ 
+set tabstop=2 softtabstop=2 
+set shiftwidth=2 
+set textwidth=120 
 set expandtab
 set backspace=indent,eol,start
-set fileformat=unix
+set fileformat=unix 
 
 "============================================="
 
-"================ Mapping  ==================="
-
-nnoremap <F1> :help <C-r><C-w><CR>
 
 inoremap <buffer>( ()<Esc>i
 inoremap <buffer>[ []<Esc>i
 inoremap <buffer>' ''<Esc>i
 inoremap <buffer>" ""<Esc>i
-inoremap <buffer>< <><Esc>i
+inoremap <buffer>{ {}<Esc>i
 
-nnoremap <buffer>H :echo expand('<cfile>')<Cr>
+nnoremap <buffer> <F5> :w <bar> :LuaREPL<Cr>
 
-"============================================="
+nnoremap " mMi"<esc>A"<esc>`M
+

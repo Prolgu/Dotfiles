@@ -9,7 +9,7 @@ let g:lightline = {
 \'colorscheme': 'ayu_dark',
 \'active': {
 \       'left': [ [ 'mode','paste' ], ['filename'], [ 'cocstatus', 'currentfunction','statuslinetabs' ] ],
-\       'right' :[['gitbranch','percent'],['filetype']]
+\       'right' :[['gitbranch','linep'],['filetype']]
 \           },
 \'subseparator': {
 \       'left': '', 'right': ''   
@@ -31,6 +31,7 @@ let g:lightline = {
 \       'trailing': 'warning'
 \           },
 \'component_function': {
+\       'linep':'LightlinePercentLine',
 \       'percent': 'LightlinePercent',
 \       'lineinfo': 'LightlineLineinfo',
 \       'filename': 'LightlineFilename',
@@ -99,6 +100,22 @@ function! LightlineLineinfo() abort
     let l:lineinfo = 'ln ' . l:current_line . '/' . l:max_line
     return l:lineinfo
 endfunction
+
+function LightlinePercentLine() abort
+    if winwidth(0)< 86
+        return ''
+    endif
+
+    let l:percent = line('.') * 100 / line('$') . '%'
+
+    let l:current_line = printf('%-3s', line('.'))
+    let l:max_line = printf('%-3s', line('$'))
+    let l:lineinfo = 'ln [' . l:percent . '/' . l:max_line.']'
+    return l:lineinfo
+endfunction
+
+
+
 
 function! LightlineFilename() abort
     let l:maxlen = winwidth(0) - winwidth(0) / 3

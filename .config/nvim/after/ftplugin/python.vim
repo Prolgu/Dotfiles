@@ -1,19 +1,22 @@
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set expandtab
-set backspace=indent,eol,start
-
-function! Termy() abort
-  call FloatermNew --autoclose=0 python %    
-endfunction
+"============================================="
+"                PYTHON-VIM                   "
+"============================================="
 
 
-"********* Map-Zone ***********"
+"============================================="
+set ts=4 sts=4 sw=4 et
+set bs=indent,eol,start
 
+"============================================="
+
+"================= Map-Zone =================="
+
+" Documentacion de referenciat w3schools/Python
+nnoremap <buffer> <F1> :w <bar> :!xdg-open https://www.w3schools.com/python/python_reference.asp<Cr><Cr>
+" Terminal interactiva
 nnoremap <buffer> <F5> :w <bar> :PyREPL<Cr>
-" nnoremap <buffer> <F5> :FloatermNew python %<Cr>
 
-"******** Autocompletar *******"
+"=============== Autocompletar ==============="
 
 inoremap <buffer>( ()<Esc>i
 inoremap <buffer>[ []<Esc>i

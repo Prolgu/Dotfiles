@@ -101,11 +101,3 @@ endfunction
 
 command! FZFNeigh call s:fzf_neighbouring_files()
 command! FZFL FloatermNew fzf
-
-
-
-
-
-
-
-
