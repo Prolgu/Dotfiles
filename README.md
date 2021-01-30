@@ -5,5 +5,7 @@
 * Arch Linux
 * Zsh
 * Nvim
+* yay
+* fzf
 
 
