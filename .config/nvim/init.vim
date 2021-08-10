@@ -1,8 +1,5 @@
-"============================================================="
-"                       Mi NVimRC                             "
-"============================================================="
-
-"==============================================================
+" Mi NVimRC ===================================================
+" =============================================================
 "    _______  ______    _______  ___      _______  __   __    "
 "   |       ||    _ |  |  _    ||   |    |       ||  | |  |   "
 "   |    _  ||   | ||  | | |   ||   |    |    ___||  | |  |   "
@@ -11,195 +8,228 @@
 "   |   |    |   |  | ||       ||       ||   |_| ||       |   "
 "   |___|    |___|  |_||_______||_______||_______||_______|   "
 "                                                             "
-"============================================================="
+" =============================================================
 
 
 
+" Auto Plug.vim install {{{=====================================
 
-"========================= Filetype =========================="
 filetype off
-"============================================================="
-"                   Auto Plug.vim install                     "
-"============================================================="
+
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
   echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !mkdir -p ~/.vim/autoload/
-  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.vim/autoload/plug.vim
+  silent !mkdir -p ~/.config/nvim/autoload/
+  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
   autocmd VimEnter * PlugInstall
 endif
-"============================================================="
 
+filetype plugin indent on
 
-"============================================================="
-"                         Plug-in                             "
-"============================================================="
+" }}}
+
+" Plug-in {{{===================================================
 
 call plug#begin('~/.config/nvim/plugged')
 
-  Plug 'tomasr/molokai' "Mi tema favorito
-  Plug 'vim-scripts/loremipsum',{'for':'html'}  "generador lorem
-  Plug 'szw/vim-g'  "google searcher
-  Plug 'tpope/vim-commentary' "para comentar 
-  Plug 'scrooloose/nerdtree'  "Visor de archivos
-  Plug 'voldikss/vim-floaterm' "Terminal flotante
-  Plug 'itchyny/lightline.vim' "linea estilizada
-  Plug 'tpope/vim-fugitive'    "Git Wrapper
-  Plug 'ryanoasis/vim-devicons' "Iconos varios
-  Plug 'sainnhe/lightline_foobar.vim' 
-  Plug 'mengelbrecht/lightline-bufferline' "bufferline como lightline
-  Plug 'sheerun/vim-polyglot' "syntax highlight
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "fuzzy finder
-  Plug 'junegunn/fzf.vim'
+  Plug 'tomasr/molokai'   " Mi tema favorito
+  Plug 'vim-scripts/loremipsum',{'for':'html'}    " Generador lorem
+  Plug 'szw/vim-g'    " Google searcher
+  Plug 'tpope/vim-fugitive'   " Git Wrapper
+  Plug 'tpope/vim-commentary'   " Para comentar 
+  Plug 'voldikss/vim-floaterm'    "Terminal Flotante
+  Plug 'ryanoasis/vim-devicons'   "Iconos Varios
+  Plug 'sheerun/vim-polyglot'   " Syntax Highlight
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy Finder
+  Plug 'junegunn/fzf.vim'   "Fuzzy Finder
   Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}  "autocompletado,etc
-  Plug 'honza/vim-snippets' 
+  Plug 'honza/vim-snippets'   " Snippets
+  Plug 'akinsho/nvim-bufferline.lua'    "Bufferline en lua
+  Plug 'kyazdani42/nvim-web-devicons'   " Nvim Icons en lua
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+  Plug 'nvim-treesitter/nvim-treesitter-refactor'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'simnalamburt/vim-mundo' "Undo tree
+  Plug 'hrsh7th/nvim-compe'
 
+  Plug 'mhinz/vim-startify'
 
 call plug#end()
-"============================================================"
+
+" }}}
+
+" Lua-Call {{{==================================================
+
+" lua require('line')
+lua require('buffy')
+lua require('map')
+lua require('tree')
+lua require('lsp')
 
 
-"======================== Filetype =========================="
-filetype plugin indent on
-"========================= Mouse ============================"
-set mouse=a
-"========================= Visual ==========================="
-set t_Co=256
-colorscheme molokai 
+
+
+" }}}
+
+" General {{{===================================================
+
 set termguicolors
-"============================================================"
-"======================== Regleta ==========================="
-set nu ruler rnu
-" set nowrap
-set fillchars=fold:\
-" set cursorline
-hi CursorLine cterm=NONE term=NONE  ctermbg=NONE 
-"highlight clear CursorLine
-highlight CursorLineNR ctermbg=Cyan ctermfg=Black cterm=bold 
-highlight LineNr ctermfg=White  cterm=bold 
-"highlight Normal guibg=black guifg=white
-"Transparencia 
-hi Normal ctermbg=NONE
-"============================================================"
-"====================== Codificacion ========================"
-set encoding=utf-8 fileencoding=utf-8
+colorscheme molokai
+set t_Co=256
+" set updatetime=100 timeout timeoutlen=500 ttimeout ttimeoutlen=50
+silent! set noerrorbells visualbell t_vb=
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+set signcolumn=number
+set gcr=a:blinkon0
+set clipboard+=unnamedplus
+set incsearch 
+set ignorecase
+
+au TermEnter * setlocal scrolloff=0
+au TermLeave * setlocal scrolloff=3
+" hi! link FoldColumn Folded
+" hi! link CursorColumn	CursorLine
+" hi! link NonText LineNr
+
+" Codificacion ==============================================
+
 scriptencoding utf-8
-"======================= Busqueda ==========================="
-set smartcase
-set path+=**/*
-set autochdir
-"============================================================"
+
+" }}}
+
+" Definitions {{{===============================================
+
+" Various ====================
 let g:netrw_banner=0
-let loaded_matchit = 1
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_liststyle = 3
+
+let g:loaded_matchit = 1
 let g:molokai_original = 1 
 
-let g:auto_save=1
+let g:python3_host_prog=expand('/usr/bin/python3')
+let g:loaded_node_provider = 1
+
+" Vim-G ====================
 let g:vim_g_command = "Go"
 let g:vim_g_f_command = "Gfi"
 let g:vim_g_query_url = "http://google.com/search?q="
 let g:vim_g_open_command = "xdg-open"
 
-let g:python3_host_prog=expand('/usr/bin/python3')
-let g:loaded_node_provider = 1
 
+" Mundo tree ================
+let g:mundo_preview_bottom=1
+let g:mundo_right=1
+let g:mundo_width = 30
+let g:mundo_preview_height = 15
 
-"======================= General ============================"
-set clipboard+=unnamed,unnamedplus
-set showcmd noshowmode showmatch
-set smartindent
-set noswapfile nobackup
-set hidden bufhidden=hide
-set ff=unix ffs=unix,dos,mac
-set lazyredraw
-" set shortmess=aAItW
-set shortmess+=c
-set updatetime=300
-set completeopt=menu,menuone,noinsert,noselect
-set report=0 scrolloff=10
-"============================================================"
-silent! set noerrorbells visualbell t_vb=
-"============================================================"
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger='<tab>'
 
-"========================== GSearch ========================="
-" Busca la seleccion visual
-let g:vim_g_command = "Go"
-"========================== Splits =========================="
-set splitbelow splitright
-highlight VertSplit cterm=NONE
-"========================= UndoFile ========================="
-set undofile undodir=~/.config/nvim/undodir
-set undolevels=5000
-"====================== Status/Tabline ======================"
-set showtabline=2
-set tabpagemax=15 
-"============================================================"
-" Remember position of cursor in buffer
+" shortcut to go to next position
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+
+" shortcut to go to previous position
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+
+" }}}
+
+" Remember cursor position {{{==================================
+
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-"============================================================"
+
+" }}}
+
+" Transparencia en pmenu y floaterm {{{=========================
+
+if exists('&pumblend')
+	set pumblend=10
+	" set winblend=85
+	hi PmenuSel blend=10
+endif
+
+"}}}
+
+" Nornu noruler en fzf {{{======================================
+
+if has('nvim') && !exists('g:fzf_layout')
+  autocmd! FileType fzf
+  autocmd  FileType fzf set nornu noruler
+    \| autocmd BufLeave <buffer> set rnu ruler
+endif
+
+"}}}
+
+" Autocmd {{{===================================================
+
+autocmd InsertEnter * :set nornu
+autocmd InsertLeave * :set rnu
 
 
-"============================================================"
+" autocmd BufWinEnter,WinEnter term://* startinsert
+" autocmd BufLeave term://* stopinsert
+autocmd TermOpen * startinsert
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+" }}}
+
+" Augroup {{{===================================================
+
+" hi WildMenu guibg=DarkGray
+" autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
 augroup vimrc-sync-fromstart
   autocmd!
   autocmd Bufenter * :syntax sync maxlines=80
 augroup END	
 
+
 augroup FileTypeAutocmds
   autocmd!
-  autocmd FileType floaterm setlocal nocursorline
+  autocmd FileType floaterm setlocal nocul nornu nonu noru
   autocmd FileType help setlocal number
   autocmd FileType * set formatoptions-=cro
 augroup END
-"============================================================"
+
+" add highlight to rofi files
+au BufReadPost *.rasi set ft=css
+
+augroup CocExplorerCustom
+  autocmd!
+  " autocmd FileType coc-explorer setlocal relativenumber
+  autocmd BufEnter coc-explorer
+    \ if &ft == 'coc-explorer'
+    \ | call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
+    \ | endif
+augroup END
+
+"}}}
+
+" Compile/Run {{{===============================================
+" nmap <leader>co :w <Cr> :!clear && gcc % <Cr>
+" nmap <leader>cr :w <Cr> :!clear && gcc % -o %< && ./%< <Cr>
+
+" vnoremap <leader>ff :echo expand('<cword>')<Cr>
+" nmap <leader>yw yiw
+"}}}
 
 
 
-"======================== Sources ==========================="
-       "================= So-Plug ==================="
-                " loaded in plugin folder
 
-"============================================================"
-"======================  Ultisnips =========================="
+" set fillchars=vert::
+command! Ghistory :0Gclog -- %
 
-" let g:UltiSnipsExpandTrigger='<tab>'
+"CapsLock is esc now! {{{======================================
 
-" " shortcut to go to next position
-" let g:UltiSnipsJumpForwardTrigger='<c-j>'
+" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 
-" " shortcut to go to previous position
-" let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+"}}}
 
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
-" " If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
-"============================================================"
-" augroup suffixes
-"   autocmd!
-"   let association=[
-"           \ ['javascript','.js,.javascript,.es,.esx,.json'],
-"           \ ['python','.py,.pyw']
-"           \ ]
-"   for ft in association
-"     execute 'autocmd FileType '. ft[0].' setlocal suffixesadd='.ft[1]
-"   endfor
-" augroup END
-
-
-" augroup ParenColor
-"   autocmd!
-"   autocmd VimEnter,BufWinEnter *
-"     \ if index(['html', 'htmldjango', 'mma', 'vue', 'xml','python','javascript'], &filetype) < 0 |
-"       \ syntax match paren1 /[{}]/   | hi paren1 guifg=#FF00FF |
-"       \ syntax match paren2 /[()]/   | hi paren2 guifg=#DF8700 |
-"       \ syntax match paren3 /[<>]/   | hi paren3 guifg=#0087FF |
-"       \ syntax match paren4 /[\[\]]/ | hi paren4 guifg=#00FF5F |
-"     \ endif
-" augroup END
-
-"============================================================"
-" autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-" autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-"============================================================"
-
+" vim:fileencoding=utf-8:ft=vim:foldmethod=marker

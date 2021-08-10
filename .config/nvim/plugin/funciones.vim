@@ -1,4 +1,6 @@
-"==============================================="
+" vim:fileencoding=utf-8:ft=vim:foldmethod=marker
+
+" Share {{{==============================================="
 
 function! s:share() range
   let n=@n
@@ -13,11 +15,11 @@ function! s:share() range
 endfunction
 
 command! -range Share :call s:share()<Cr>
+" }}}
 
 
 
-
-"******** Indent *********"
+" Indent {{{===============================================
 let g:indentguides_state = 0
 function! IndentGuides() abort
     if g:indentguides_state
@@ -29,21 +31,11 @@ function! IndentGuides() abort
     endif
 endfunction
 hi def IndentGuides guibg=#303030
+" }}}
 
 
-function! BrowserPreview() abort
-    exec "w"
-    if &modified
-        let tmpfile = tempname()
-        execute "silent write " . tmpfile
-        call system("firefox " . shellescape(tmpfile))
-        if delete(tmpfile) != 0
-            echoerr "could not remove " . tmpfile
-        endif
-    else
-        call system("firefox " . shellescape(expand("%:p")))
-    endif
-endfunction
+
+" Salt/JumpToCSS {{{=======================================================
 
 function! Salt() abort
     " let l:Command = expand("<cfile>")
@@ -64,92 +56,24 @@ function! JumpToCSS() abort
   endif
 endfunction
 
-"************** Registro ****************"
-
-function! Reg()
-    reg
-    echo "Register: "
-    let char = nr2char(getchar())
-    if char != "\<Esc>"
-        execute "normal! \"".char."p"
-    endif
-    redraw
-endfunction
-
-" command! -nargs=0 Reg call Reg()
-
-"******* Hex/Norm ********
-
-noremap <F10> :call HexMe()<CR>
-let $in_hex=0
-function! HexMe()
-    set binary
-    set noeol
-    if $in_hex>0
-        :%!xxd -r
-        let $in_hex=0
-    else
-        :%!xxd
-    let $in_hex=1
-    endif
-endfunction
-
-"============================ Floaterm ============================="
-
-command! PyREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (python %)
-command! JsREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (node %)
-command! LuaREPL  :FloatermNew --wintype=floating --width=0.5 --height=1.0 --position=right (lua %)
-
-"=================================================================="
-"****************************** OLD *******************************"
-"=================================================================="
-
-function! Templates(key) abort
-let numt ={
-            \"1":"~/.vimtemplates/py",
-            \"2":"~/.vimtemplates/sh",
-            \"3":"~/.vimtemplates/c",
-            \"4":"~/.vimtemplates/cpp",
-            \"5":"~/.vimtemplates/html",
-            \}
-
-     exec "0r".get(numt,a:key)
-endfunction
+" }}}
 
 
-"*******************************"
 
-function! Term() abort
-    set splitbelow
-    exec winheight(0)/4."split"|:w | terminal $SHELL
-    "exec "vsp" | terminal $SHELL %
-    set nonumber
-    set norelativenumber
-    set signcolumn=no
-    startinsert!
-endfunction
+" Floaterm {{{============================="
 
-"************* ToggleTerm *************"
-let g:term_buf = 0
-let g:term_win = 0
-function! TermToggle(height) abort
-    if win_gotoid(g:term_win)
-        hide
-    else
-        botright new
-        exec "resize " . a:height
-        try
-            exec "buffer " . g:term_buf 
-        catch
-            call termopen('$SHELL', {"detach": 0})
-            let g:term_buf = bufnr("")
-            set nonumber
-            set norelativenumber
-            set signcolumn=no
-        endtry
-        startinsert!
-        let g:term_win = win_getid()
-    endif
-endfunction
+" Terminal
+silent command! Termy  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center --autoclose=2 ($SHELL)
+" Terminales para lenguajes(<F5>)
+silent command! PyREPL  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (python %)
+silent command! JsREPL  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (node %)
+silent command! LuaREPL :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (lua %)
+silent command! ShREPL  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center ($SHELL %)
+silent command! CREPL  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (clear && gcc % -o %< && ./%<)
+silent command! CPPREPL  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (clear && g++ % -o %< && ./%<)
+" silent command! LIVES  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center ()
+" map <F9> :!g++ -g % -o %:r && ./%:r <CR>
+" tnoremap <A-n> <Cmd>FloatermNew<CR><Cmd>startinsert<CR>
 
+" }}}
 

@@ -26,11 +26,16 @@ set backspace=indent,eol,start
 nnoremap <silent> <F7> :set spell!<cr>
 inoremap <silent> <F7> <C-O>:set spell!<cr>
 
-inoremap <buffer>~n  ñ
-inoremap <buffer>( ()<Esc>i
-inoremap <buffer>[ []<Esc>i
-inoremap <buffer>' ''<Esc>i
-inoremap <buffer>" ""<Esc>i
+inoremap <buffer>~n  
+
+" add mapping for auto closing
+imap <buffer>"<tab> ""<Left>
+imap <buffer>'<tab> ''<Left>
+imap <buffer>(<tab> ()<Left>
+imap <buffer>[<tab> []<Left>
+imap <buffer>{<tab> {}<Left>
+" imap <buffer>{<CR> {<CR>}<ESC>O
+" imap <buffer>{;<CR> {<CR>};<ESC>O
 
 " wrap the current line in (), e.g:
 nnoremap (( mMI(<esc>A)<esc>`M

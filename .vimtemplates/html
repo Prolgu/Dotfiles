@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+				<link rel="stylesheet" href="css/normalize.css">
+				<link rel="stylesheet" href="css/master.css">
+        <title> Mi Titulo </title>
+    </head>
+
+    <body>
+			<div class="header">
+
+			</div>
+
+			<div class="body">
+
+
+			</div>
+
+			<div class="foot">
+
+			</div>
+			<script src="myScript.js"></script> 
+    </body>
+</html>

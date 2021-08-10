@@ -1,5 +1,8 @@
+" vim:fileencoding=utf-8:ft=vim:foldmethod=marker
 
-"********************* ALE ***************************"
+
+" ALE {{{=================================================
+
 " let g:ale_completion_enabled = 0
 " set omnifunc=ale#completion#OmniFunc
 let g:ale_sign_error = '>>'
@@ -18,3 +21,4 @@ let g:ale_lint_on_enter = 1
  " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
 let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+" }}}

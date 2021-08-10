@@ -18,14 +18,22 @@ nnoremap <buffer> <F5> :w <bar> :PyREPL<Cr>
 
 "=============== Autocompletar ==============="
 
-inoremap <buffer>( ()<Esc>i
-inoremap <buffer>[ []<Esc>i
-inoremap <buffer>' ''<Esc>i
-inoremap <buffer>" ""<Esc>i
-inoremap <buffer>{ {}<Esc>i
-inoremap <buffer>{<Cr> {<Cr>}<Esc>O
+" inoremap <buffer>( ()<Esc>i
+" inoremap <buffer>[ []<Esc>i
+" inoremap <buffer>' ''<Esc>i
+" inoremap <buffer>" ""<Esc>i
+" inoremap <buffer>{ {}<Esc>i
+" inoremap <buffer>{<Cr> {<Cr>}<Esc>O
 " inoremap <buffer>< <><Esc>i
 
+" add mapping for auto closing
+imap <buffer>"<tab> ""<Left>
+imap <buffer>'<tab> ''<Left>
+imap <buffer>(<tab> ()<Left>
+imap <buffer>[<tab> []<Left>
+imap <buffer>{<tab> {}<Left>
+imap <buffer>{<CR> {<CR>}<ESC>O
+" imap <buffer>{;<CR> {<CR>};<ESC>O
 
 " wrap the current line in (), e.g:
 " nnoremap (( mMI(<esc>A)<esc>`M

@@ -1,0 +1,22 @@
+/* vim:fileencoding=utf-8:ft=cpp:foldmethod=marker 
+* Comentarios {{{ 
+* .cxx
+* 
+* Copyright 2021 Mjolner <mjolner@Pr0lGu-N0T3>
+* 
+* 
+* 
+* }}} */
+
+/* Code Start {{{*/
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	
+	return 0;
+}
+
+/*Code End }}}*/

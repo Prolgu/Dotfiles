@@ -36,8 +36,8 @@
     },
     "diagnostic.level": "hint",
     "diagnostic.refreshOnInsertMode": false,
-    "diagnostic.refreshAfterSave": true,
-    "diagnostic.displayByAle": true,
+    "diagnostic.refreshAfterSave": false,
+    "diagnostic.displayByAle": false,
     "diagnostic.virtualText": true,
     "diagnostic.errorSign": "\uf65b",
     "diagnostic.warningSign": "\uf421",
@@ -59,11 +59,13 @@
         "<C-v>": "prompt:paste"
     },
     "list.normalMappings": {
-        "<C-c>": "do:exit"
+        "<C-c>": "do:exit",
+        "<Down>": "prompt:next",
+        "<Up>": "prompt:previous"
     },
     "git.changedSign.text": "▌",
-    "git.addedSign.text": "▌",
-    "git.removedSign.text": "▁",
+    "git.addedSign.text": "+",
+    "git.removedSign.text": "-",
     "git.changeRemovedSign.text": "▁",
     "git.topRemovedSign.text": "▔",
     "git.changedDecorator": " ",
@@ -92,7 +94,7 @@
     "coc.source.around.priority": 88,
     "coc.source.buffer.shortcut": "B",
     "coc.source.buffer.priority": 87,
-    "coc.source.buffer.ignoreGitignore": false,
+    "coc.source.buffer.ignoreGitignore": true,
     "coc.source.syntax.shortcut": "X",
     "coc.source.syntax.priority": 79,
     "coc.source.tag.shortcut": "T",
@@ -106,7 +108,7 @@
     "coc.preferences.colorSupport": true,
     "coc.preferences.enableMessageDialog": true,
     "highlight.document.enable": true,
-    "highlight.colors.enable": false,
+    "highlight.colors.enable": true,
     "highlight.disableLanguages": [],
     "emmet.includeLanguages": {
         "vue-html": "html",
@@ -115,50 +117,108 @@
     "explorer.icon.enableNerdfont": true,
     "explorer.keyMappingMode": "none",
     "explorer.previewAction.onHover": false,
+    "explorer.openAction.for.directory": "expandOrCollapse",
+    "explorer.git.icon.status.added": "✚",
+    "explorer.git.icon.status.deleted": "✖",
+    "explorer.git.icon.status.renamed": "➜",
+    "explorer.git.icon.status.unmerged": "≠",
+    "explorer.git.icon.status.untracked": "?",
+    "explorer.git.icon.status.modified": "✹",
+    "explorer.git.icon.status.ignored": "☒",
+    "explorer.git.icon.status.mixed": "*",
+    "explorer.quitOnOpen": true,
+    "explorer.file.showHiddenFiles": false,
+    "explorer.file.column.clip.copy": "",
+    "explorer.file.column.clip.cut": "",
+    "explorer.width": 25,
+    "explorer.file.hiddenRules": {
+        "extensions": ["o", "a", "obj", "pyc"],
+        "filenames": ["\\.byebug+", "\\.DS_Store|"],
+        "patternMatches": ["^\\.git$", "^\\node_modules$", "^\\plugged$"]
+    },
     "explorer.keyMappings.global": {
-        "s": "toggleSelection",
-        ":": "actionMenu",
+        "i": false, // cancel default mapkey
 
-        "h": "collapse",
-        "l": ["expandable?", "expand", "open"],
-        "L": "expandRecursive",
-        "H": "collapseRecursive",
-        "o": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
-        "<cr>": "open",
+        "*": "toggleSelection",
+        "<tab>": "actionMenu",
+
+        "gk": ["wait", "expandablePrev"],
+        "gj": ["wait", "expandableNext"],
+        "h": ["wait", "collapse"],
+        "l": ["wait", "expandable?", "expand", "open"],
+        "J": ["wait", "toggleSelection", "normal:j"],
+        "K": ["wait", "toggleSelection", "normal:k"],
+        "gl": ["wait", "expand:recursive"],
+        "gh": ["wait", "collapse:recursive"],
+        "<2-LeftMouse>": [
+        "expandable?",
+        ["expanded?", "collapse", "expand"],
+        "open"
+        ],
+        "o": ["wait", "expanded?", "collapse", "expand"],
+        "<cr>": ["wait", "expandable?", "cd", "open"],
+        "e": "open",
+        "s": "open:split",
+        "E": "open:vsplit",
         "t": "open:tab",
-        "<bs>": "gotoParent",
+        "<bs>": ["wait", "gotoParent"],
+        "gs": ["wait", "reveal:select"],
+        "il": "preview:labeling",
+        "ic": "preview:content",
+        "Il": "previewOnHover:toggle:labeling",
+        "Ic": "previewOnHover:toggle:content",
+        "II": "previewOnHover:disable",
 
-        "Y": "copyFilepath",
-        "y": "copyFilename",
-        "c": "copyFile",
-        "x": "cutFile",
+        "yp": "copyFilepath",
+        "yn": "copyFilename",
+        "yy": "copyFile",
+        "dd": "cutFile",
         "p": "pasteFile",
-        "d": "delete",
-        "D": "deleteForever",
+        "df": "delete",
+        "dF": "deleteForever",
 
-        "n": "addFile",
-        "N": "addDirectory",
+        "a": "addFile",
+        "A": "addDirectory",
         "r": "rename",
 
-        ".": "toggleHidden",
+        "zh": "toggleHidden",
+        "g<dot>": "toggleHidden",
         "R": "refresh",
-        "<C-p>": "preview",
 
         "?": "help",
         "q": "quit",
         "<esc>": "esc",
-        "e": "systemExecute",
+        "X": "systemExecute",
+        "gd": "listDrive",
 
-        "f": "searchRecursive",
+        "f": "search",
+        "F": "searchRecursive",
 
         "gf": "gotoSource:file",
         "gb": "gotoSource:buffer",
 
-        "gk": "gitPrev",
-        "gj": "gitNext",
-        "ga": "gitStage",
-        "gu": "gitUnstage"
+        "[[": ["wait", "sourcePrev"],
+        "]]": ["wait", "sourceNext"],
+
+        "[i": ["wait", "indentPrev"],
+        "]i": ["wait", "indentNext"],
+
+        "[m": ["wait", "markPrev:modified"],
+        "]m": ["wait", "markNext:modified"],
+
+        "[d": ["wait", "markPrev:diagnosticError:diagnosticWarning"],
+        "]d": ["wait", "markNext:diagnosticError:diagnosticWarning"],
+        "[D": ["wait", "markPrev:diagnosticError"],
+        "]D": ["wait", "markNext:diagnosticError"],
+
+        "[c": ["wait", "markPrev:git"],
+        "]c": ["wait", "markNext:git"],
+        "<<": "gitStage",
+        ">>": "gitUnstage"
     },
+    /* "lua.version": "5.4", */
+    /* "lua.commandPath": "/usr/bin/lua", */
+    "html.autoClosingTags": true,
     "clangd.enabled": true,
     "clangd.arguments": ["--clang-tidy", "--completion-style=detailed", "--fallback-style=google", "--header-insertion=iwyu", "--suggest-missing-includes"],
     "clangd.semanticHighlighting": true,
@@ -168,5 +228,5 @@
     "markdownlint.config": {
         "MD013": false,
         "MD041": false
-    },
+    }
 }

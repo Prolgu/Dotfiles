@@ -1,0 +1,508 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+
+color0 = ${xrdb:color0}
+color1 = ${xrdb:color1}
+color2 = ${xrdb:color2}
+color3 = ${xrdb:color3}
+color4 = ${xrdb:color4}
+color5 = ${xrdb:color5}
+color6 = ${xrdb:color6}
+color7 = ${xrdb:color7}
+color8 = ${xrdb:color8}
+color9 = ${xrdb:color9}
+color10 = ${xrdb:color10}
+color11 = ${xrdb:color11}
+color12 = ${xrdb:color12}
+color13 = ${xrdb:color13}
+color14 = ${xrdb:color14}
+color15 = ${xrdb:color15}
+
+dark-light = #272A2B 
+active-light = #313435
+
+red=#ff6c6b
+green=#A3BE8C
+
+
+[bar/example]
+
+tray-position = right
+tray-padding-left=2
+tray-padding-right=2
+
+
+monitor = eDP1
+width =  100%
+height = 20
+padding-left = 1
+padding-right = 1
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+bottom = false
+
+border-top-size = 6
+border-bottom-size = 6
+border-top-color = ${colors.background}
+border-bottom-color = ${colors.background}
+
+line-size = 0
+wm-restack = bspwm
+; wireless separator
+modules-left =  HTB separator target  
+modules-center = bspwm
+; modules-right = wlan alsa  battery cpu  mem time powermenu
+modules-right = wlan battery time powermenu
+
+font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=12;3
+; font-1 = Material Design Icons:style=Regular:size=12;2
+; font-2 = unifont:fontformat=truetype:size=9:antialias=true;2
+
+
+[module/separator]
+type = custom/text
+
+content = %{T3}   %{T-}
+content-foreground = #2b2f37
+content-padding-left=1
+content-padding-right=1
+
+[module/HTB]
+type = custom/script
+
+label=%output%
+label-padding=2
+tail=true
+interval = 2
+exec = ~/.scripts/HTB.sh
+
+format-background=#2b2f37
+; format-padding-left=2
+; format-padding-right=2
+; format-offset=2
+
+[module/target]
+type=custom/script
+
+label=%output%
+label-padding=2
+tail=true
+interval=1
+exec = ~/.scripts/target.sh
+
+format-background=#2b2f37
+format-padding-left=2
+format-padding-right=2
+format-offset=2
+
+
+[module/net]
+type = custom/script
+
+label=%output%
+label-padding=2
+tail=true
+
+interval = 2
+exec = ~/.scripts/poly_net.sh
+
+
+[module/mpd]
+type = internal/mpd
+
+interval = 1
+
+format-online = <icon-prev><toggle><icon-next><label-song><label-time>
+format-online-prefix = 
+format-online-prefix-foreground = ${color.green}
+
+label-song =  " %artist% - %title%"
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+label-time = " %elapsed% / %total%"
+
+label-offline = " Offline"
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-next = 
+icon-prev = 
+
+toggle-on-foreground = ${color.primary}
+toggle-off-foreground = ${color.secondary}
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <ramp-volume><label-volume>
+label-volume = %percentage%%
+; label-volume-background=${colors.dark-light}
+;label-volume-foreground = ${root.foreground}
+
+label-muted =" 婢 Muted"
+label-muted-foreground = ${color.sep}
+; label-muted-background =${colors.dark-light}
+
+; ramp-volume-padding=1
+ramp-volume-0 =" "
+ramp-volume-0-foreground = ${color.sep}
+ramp-volume-1 ="墳 "
+ramp-volume-1-foreground = ${color.sep}
+ramp-volume-2 =" "
+ramp-volume-2-foreground = ${color.sep}
+
+format-volume-background=${colors.dark-light}
+
+[module/bspwm]
+type = internal/bspwm
+
+
+pin-workspaces = true
+inline-mode = true
+enable-click = false
+enable-scroll = false
+reverse-scroll = false
+
+
+format = <label-state> 
+format-padding-left=4
+format-padding-right=4
+
+; format-fixed-center=true
+
+format-offset-y=-1%
+; ws-icon-0 = 1;%{F#D8DEE9} 
+; ws-icon-1 = 2;%{F#BF616A}   
+; ws-icon-2 = 3;%{F#EBCB8B}    
+; ws-icon-3 = 4;%{F#81A1C1}
+; ws-icon-4 = 5;%{F#A3BE8C} 
+
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+
+icon-default = 
+
+label-active = 
+label-active-background = ${colors.active-light}
+; label-active-background = ${colors.background} 
+label-active-foreground = ${colors.red}
+label-active-padding = 2
+
+label-occupied = 
+label-occupied-background = ${colors.active-light}
+; label-occupied-background = ${colors.background}
+label-occupied-foreground = ${colors.green}
+label-occupied-padding = 2
+
+label-urgent = 
+label-urgent-background = ${colors.active-light}
+; label-urgent-background = ${colors.background}
+label-urgent-foreground = ${colors.red}
+label-urgent-padding = 2
+
+label-empty = 
+label-empty-background = ${colors.active-light}
+; label-empty-background = ${colors.background}
+label-empty-foreground = ${colors.color7}
+label-empty-padding = 2
+
+
+[module/time]
+type = internal/date
+
+interval = 60
+
+format = <label>
+format-background = #a3be8c
+format-padding = 1
+
+date = %{F#282A36}󰥔 %H:%M%{F-}
+time-alt = %{F#282A36}󰃭 %a, %b %d%{F-}
+
+label = %date%%time%
+
+
+[module/mem]
+type = custom/script
+
+exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
+format = <label>
+label =  %output% M
+label-padding = 1
+label-foreground = #88C0D0
+label-background = ${colors.background}
+
+
+
+; [module/powermenu]
+; type = custom/text 
+; content =" " 
+; content-padding =0
+; click-left = doas zzz &
+; content-foreground =  #000
+; content-background = #A3BE8C
+
+
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = false
+#format-spacing = 1
+label-padding=1
+label-open = 
+label-open-foreground = ${colors.background}
+label-open-background = #A3BE8C  
+label-open-padding = 1
+label-close = 
+label-close-foreground = ${colors.background}
+label-close-background = #BF616A 
+
+label-close-padding = 1
+
+label-separator = " | "
+label-separator-background = #A3BE8C
+label-separator-foreground = ${colors.background}
+
+
+menu-0-0 = 
+menu-0-0-exec = systemctl poweroff
+menu-0-1 = 
+menu-0-1-exec = systemctl reboot
+menu-0-2 = 
+menu-0-2-exec = bspc quit
+; menu-0-2 = 
+; menu-0-2-exec = sudo zzz
+; menu-0-4 = 
+; menu-0-4-exec = xset dpms force off
+
+menu-0-0-padding=1
+menu-0-0-foreground=${colors.background}
+menu-0-0-background=#A3BE8C
+
+menu-0-1-padding=1
+menu-0-1-foreground=${colors.background}
+menu-0-1-background=#A3BE8C
+
+menu-0-2-padding=1
+menu-0-2-foreground=${colors.background}
+menu-0-2-background=#A3BE8C
+
+
+[module/wire]
+type = custom/script
+
+label=%output%
+label-padding=2
+tail=true
+interval = 2
+
+label-background=#2b2f37
+exec = ~/.scripts/poly_net.sh
+
+
+[module/wlan]
+type = internal/network
+
+; interface = wlp2s0
+interface = wlan0
+interval = 3.0
+
+label-connected-padding=1
+label-disconnected-padding=1
+
+format-connected =  <label-connected>
+label-connected = "  On " 
+
+label-disconnected = "睊  Off " 
+label-disconnected-foreground = #BF616A 
+
+; label-connected =   %essid%
+label-connected-foreground = #A3BE8C 
+
+[module/wireless]
+type = internal/network
+
+interface = wlan0
+interval = 3.0
+label-connected-padding-left=1
+label-connected-padding-right=1
+; label-connected-padding-top=8
+format-connected = <label-connected>
+label-connected = %{F#ffff00}%{F-}%local_ip% 
+; label-padding=1
+label-connected-background=#2b2f37
+; label-connected-foreground=#A3BE8C
+label-connected-foreground=#ffffff
+
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = AC
+full-at = 100
+
+
+format-charging = <animation-charging> <label-charging>
+label-charging = %percentage%%
+
+format-charging-foreground = ${colors.color4}
+; format-charging-background = ${colors.dark-light}
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+
+format-discharging-foreground = ${colors.foreground}
+; format-discharging-background = ${colors.dark-light}
+
+; format-animation-discharging-background = ${colors.dark-light}
+
+
+format-full-prefix = " "
+
+format-full-prefix-foreground = ${colors.color4}
+; format-full-prefix-background = ${colors.dark-light}
+
+format-foreground = ${colors.color4}
+; format-background = ${colors.dark-light}
+
+format-full-padding= 1
+
+label-discharging-foreground = ${colors.foreground}
+; label-discharging-background = ${colors.dark-light}
+
+label-charging-foreground = ${colors.color4}
+; label-charging-background = ${colors.dark-light}
+
+label-padding = 1
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+ramp-capacity-foreground = ${colors.foreground}
+; ramp-capacity-background = ${colors.dark-light}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+animation-charging-foreground = ${colors.color4}
+; animation-charging-background = ${colors.dark-light}
+
+label-animation-charging-framerate = 750
+
+format-charging-padding = 1
+format-discharging-padding = 1
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+;format-volume = <ramp-volume> <label-volume>
+format-volume = <ramp-volume> <bar-volume>
+label-volume = %percentage%%
+;label-volume-foreground = ${root.foreground}
+
+label-muted = "婢"
+label-muted-foreground = ${color.sep}
+
+ramp-volume-0 =
+ramp-volume-0-foreground = ${color.sep}
+ramp-volume-1 = 
+ramp-volume-1-foreground = ${color.sep}
+ramp-volume-2 = 
+ramp-volume-2-foreground = ${color.sep}
+
+; Only applies if <bar-volume> is used
+bar-volume-format = "%fill%%indicator%%empty%"
+bar-volume-width = 10
+bar-volume-gradient = true
+
+bar-volume-indicator = ${bar.indicator}
+bar-volume-indicator-foreground = ${color.foreground}
+bar-volume-indicator-font = 4
+
+bar-volume-fill = ${bar.fill}
+bar-volume-fill-font = 4
+bar-volume-foreground-0 = ${color.green}
+bar-volume-foreground-1 = ${color.yellow}
+bar-volume-foreground-2 = ${color.red}
+
+[module/volume]
+type = custom/script
+
+exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
+format = <label>
+internal = 5.0
+; label =  %output% 
+label-prefix=" "
+label=%percentage%%
+label-foreground = #BF616A
+label-padding = 1
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label>
+format-prefix = "  "
+
+label = %percentage%%
+format-prefix-foreground = #D8DEE9
+label-foreground =   #D8DEE9
+#format-background = ${colors.foreground}
+format-padding = 1
+
+
+
+[module/cpu]
+type = internal/cpu
+
+
+format =  <label> 
+format-padding = 2
+label = CPU %percentage%%
+format-background = #81A1C1
+format-foreground = ${colors.background}
+interval = 2.5
+; label-separator="  "   
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...
+
+
+
+
+
+; vim:ft=dosini
