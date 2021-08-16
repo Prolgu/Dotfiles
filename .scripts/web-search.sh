@@ -1,22 +1,5 @@
 #!/usr/bin/env bash
 
-# -----------------------------------------------------------------------------
-# Info:
-#   author:    Miroslav Vidovic
-#   file:      web-search.sh
-#   created:   24.02.2017.-08:59:54
-#   revision:  ---
-#   version:   1.0
-# -----------------------------------------------------------------------------
-# Requirements:
-#   rofi
-# Description:
-#   Use rofi to search the web.
-# Usage:
-#   web-search.sh
-# -----------------------------------------------------------------------------
-# Script:
-
 declare -A URLS
 
 URLS=(
