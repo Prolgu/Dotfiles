@@ -1,10 +1,13 @@
+# vim:fileencoding=utf-8:ft=sxhkdrc:foldmethod=marker
+
+# varios{{{1
 
 super + m
   bspc desktop -l next
 
 # terminal emulator
 super + Return
-  	st  tmux new-session -A -s ws
+		st -e tmux new-session -A -s ws
 
 super + shift + Return
 		st 	
@@ -32,7 +35,7 @@ super + shift + e
 
 #telegram desktop
 super + a
-        telegram-desktop
+	telegram-desktop
 
 #polybar
 super + x
@@ -55,8 +58,9 @@ super + c
 		rofi -show drun
 super + r
 		rofi -show drun
-#
-# bspwm hotkeys
+
+
+# bspwm hotkeys {{{1
 #
 
 # quit/restart bspwm
@@ -98,8 +102,8 @@ super + y
 super + g
 	bspc node -s biggest
 
-#
-# state/flags
+
+# state/flags{{{1
 #
 
 # set the window state
@@ -110,8 +114,7 @@ super + {d,shift + d,s,f}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-#
-# focus/swap
+# focus/swap{{{1
 #
 
 # focus the node in the given direction
@@ -148,8 +151,7 @@ super + {_,shift + }{1-9,0}
 super + shift + equal
     bspc node -m last --follow
 
-#
-# preselect
+# preselect{{{1
 #
 
 # preselect the direction
@@ -168,8 +170,7 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#
-# move/resize
+# move/resize{{{1
 #
 
 # expand a window by moving one of its side outward
@@ -194,6 +195,9 @@ super + s :{h,j,k,l}
 
 super + w
 		firefox
+
+super + shift + w
+		luakit
 
 super + f
 		Thunar

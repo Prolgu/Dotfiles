@@ -17,15 +17,14 @@ endif
 nnoremap <silent> gf :call Salt()<Cr>
 nnoremap <silent> gr :call JumpToCSS()<Cr><Cr>
 
-inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%<C-o>i
-" nnoremap <buffer> <leader>6 :r ~/.vimtemplates/ipsum.template<Cr>
 
 " Documentacion de referencias w3schools/html
 nnoremap <silent><buffer> <F1> :w <Bar> !xdg-open https://www.w3schools.com/tags/default.asp<Cr><Cr>
 "nnoremap <buffer> <silent> <F5> :call BrowserPreview()<CR>
 " nnoremap <silent><buffer> <F5> :w <Bar> !xdg-open %<Cr><Cr>
 " inoremap <silent><buffer> <leader>b <br/>
-nnoremap <silent><buffer> <F5> :w <Bar> !live-server %:p:h<Cr><Cr>
+nnoremap <silent><buffer> <F5> :w <Bar> !live-server --browser=luakit %:p:h<Cr><Cr>
+nnoremap <silent><buffer> <F6> :w <Bar> !live-server %:p:h<Cr><Cr>
 inoremap <silent><buffer>" ""<Esc>i
 
 " }}}

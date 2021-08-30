@@ -30,7 +30,7 @@ source /usr/share/fzf/completion.zsh
 # export ZSH="/home/mjolner/.oh-my-zsh"
 export EDITOR=nvim
 export BROWSER=firefox
-# export PAGER="most"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 #Default
 #export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border'
 # export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -122,7 +122,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git)
+# plugins=(git)
 plugins=(git  zsh-syntax-highlighting)
 #zsh-autosuggestions
 source $ZSH/oh-my-zsh.sh
@@ -139,18 +139,23 @@ function openNvim {
 
 # Target {{{
 
-function setar(){
+function target(){
     target=$1
     echo "$target" > ~/.scripts/target
  }
 
-function cltar(){
-    echo '' > ~/.scripts/target
-}
+# function cltar(){
+#     echo '' > ~/.scripts/target
+# }
 
 function cptar() {
   target=$(cat ~/.scripts/target)
   echo -n "$target" | xclip -sel clipboard
+}
+
+function pptar() {
+  echo $(cat ~/.scripts/target) 
+
 }
 
 # }}}
@@ -165,7 +170,7 @@ function fzf-cd() {
   ls
 }
 
-function fzf-aliases-functions() {
+function fzf-alice() {
     CMD=$(
         (
             (alias)
@@ -183,7 +188,7 @@ function fzf-find-files(){
     for prog in $(echo $file); #open all the selected files
     do; $EDITOR $prog; done;
   else
-    echo "cancelled fzf"
+    echo "Cancelado"
   fi
 }
 
@@ -244,23 +249,6 @@ bindkey '^R' fzf-history-widget-accept
 autoload -Uz compinit
 compinit
 
-# zstyle ':completion:*' auto-description 'specify: %d'
-# zstyle ':completion:*' completer _expand _complete _correct _approximate
-# zstyle ':completion:*' format 'Completing %d'
-# zstyle ':completion:*' group-name ''
-# zstyle ':completion:*' menu select=2 eval "$(dircolors -b)"
-# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-# zstyle ':completion:*' list-colors ''
-# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-# zstyle ':completion:*' menu select=long
-# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-# zstyle ':completion:*' use-compctl false
-# zstyle ':completion:*' verbose true
-# zstyle ':completion:*:descriptions' format "$fg[yellow]%B--- %d%b"
-
-# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-# zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ $TERM != "screen" ]] && exec tmux

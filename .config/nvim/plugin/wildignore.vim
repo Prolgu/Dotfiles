@@ -1,6 +1,8 @@
+" vim:fileencoding=utf-8:ft=vim:foldmethod=marker
 
 "======================= Wildmenu ==========================="
 
+" WildIgnore  {{{======================================================
 silent! set wildchar=9 nowildmenu wildmode=longest,full wildmenu wildoptions= wildignorecase fileignorecase
 silent! set wildignore=*.o,*.obj,*~,*.exe,*.a,*.pdb,*.lib "stuff to ignore when tab completing
 silent! set wildignore+=__pycache__,.stversions,*.spl,*.out,%*
@@ -20,3 +22,4 @@ silent! set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
 silent! set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 silent! set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 silent! set wildignore+=*/tmp/*,,*.db,*.sqlite
+" }}}

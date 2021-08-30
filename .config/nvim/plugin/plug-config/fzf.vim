@@ -1,6 +1,4 @@
-"========================================"
-"               FZF-VIM                  "
-"========================================"
+" FZF-VIM ========================================
 
 " This is the default extra key bindings
 " let g:fzf_action = {
@@ -9,9 +7,10 @@
 "   \ 'ctrl-v': 'vsplit' }
  
 let g:fzf_action = {
-   \ 'return': 'GotoOrOpen tab',
-   \ 'ctrl-x': 'split',
-   \ 'ctrl-v': 'vsplit' }
+  \ 'return': 'GotoOrOpen tab',
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " let g:fzf_action = {
 "   \ 'return': 'tab split',
@@ -31,8 +30,8 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_tags_command = 'ctags -R'
 " Border color
-" let g:fzf_layout = {'up':'~80%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'rounded' } }
-let g:fzf_layout = {'down':'~50%'}
+let g:fzf_layout = {'up':'~80%', 'window': { 'width': 0.95, 'height': 0.85,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'rounded' } }
+" let g:fzf_layout = {'down':'~50%'}
 
 
 let $FZF_DEFAULT_OPTS = '--layout=reverse-list --info=inline'
@@ -69,7 +68,7 @@ command! -nargs=+ GotoOrOpen call s:GotoOrOpen(<f-args>)
 
 " Get Files
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse-list', '--info=inline'],'down':15}), <bang>0)
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse-list', '--info=inline']}), <bang>0)
 
 
 " Get text in files with Rg
@@ -81,8 +80,7 @@ command! -bang -nargs=* Rg
 
 command! -bang PFiles call fzf#run({
             \'source':'ls -a ~/Documentos',
-            \'down':10,
-            \'window':{ 'width': 0.4, 'height': 0.3,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' }})
+            \'window':{ 'width': 0.7, 'height': 0.7,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' }})
 
 " nnoremap <silent> <C-p> :call fzf#run({
 "             \'source':'ls -a ~/Documentos',
@@ -91,8 +89,6 @@ command! -bang PFiles call fzf#run({
 
 command! -bang LS call fzf#run(fzf#wrap({
             \'source': 'exa -lhSa',
-            \'options': ['--layout=reverse-list', '--info=inline'],
-            \'down':15,
             \}, <bang>0))
 
 

@@ -1,4 +1,23 @@
 {
+
+  "prettier.requireConfig": true,
+
+  "tslint.enable": true,
+  "tslint.autoFixOnSave": true,
+
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "Markdown",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+    "suggest.floatEnable": true,
+    "diagnostic.messageTarget": "float",
+    "signature.target": "float",
+    "coc.preferences.hoverTarget": "float",
     "suggest.timeout": 500,
     "suggest.enablePreview": true,
     "suggest.maxCompleteItemCount": 20,
@@ -218,6 +237,8 @@
     },
     /* "lua.version": "5.4", */
     /* "lua.commandPath": "/usr/bin/lua", */
+    "codeLens.enable": true,
+    "java.referencesCodeLens.enabled": true,
     "html.autoClosingTags": true,
     "clangd.enabled": true,
     "clangd.arguments": ["--clang-tidy", "--completion-style=detailed", "--fallback-style=google", "--header-insertion=iwyu", "--suggest-missing-includes"],

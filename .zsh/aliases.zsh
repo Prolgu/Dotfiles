@@ -36,6 +36,9 @@ alias -g sxrc="$HOME/.config/sxhkd/sxhkdrc"
 # -- Tmux config file
 alias -g tmc="$HOME/.tmux.conf"
 
+# -- Rofi config file
+alias -g rasi="$HOME/.config/rofi/config.rasi"
+
 # -- Alice 
 alias -g alice="$HOME/.zsh/aliases.zsh"
 alias conejo="bat ~/.zsh/aliases.zsh"
@@ -52,13 +55,13 @@ alias sclu="$HOME/Develop/LuaSC && clear"
 alias scjs="$HOME/Develop/ScriptJS && clear"
 alias codec="$HOME/Develop/CodeC && clear"
 alias codecpp="$HOME/Develop/CodeCPP && clear"
-alias wds="$HOME/Develop/WebDesigne && clear"
+alias wds="$HOME/Develop/WebDesigne/Bios && clear"
 
 alias ftv="$HOME/.config/nvim/after/ftplugin && clear"
 alias pluv="$HOME/.config/nvim/plugin && clear"
-alias nvf="$HOME/.config/nvim/"
+alias nvf="$HOME/.config/nvim/ && clear"
 
-
+alias tsd="/run/media/sabaoth/A7F7-9C85/ && clear"
 
 
 # -- Aplicaciones
@@ -115,6 +118,18 @@ alias pss="sudo pacman -Ss"
 
 # }}}
 
+# MPC alias {{{ ====================
+
+alias mplay="mpc play"
+alias mload="mpc load"
+alias next="mpc next"
+alias prev="mpc prev"
+
+# }}}
+
+# Bspwm 
+alias restb="bspc wm -r"
+
 # Otros alias {{{ ====================
 
 alias zup="source ~/.zshrc && clear"
@@ -122,8 +137,11 @@ alias zud="omz update"
 alias apagar="shutdown -P now"
 alias reiniciar="shutdown -r now"
 alias wifilist="nmcli -g SSID device wifi list"
+alias modeler="$HOME.scripts/bash-modeler.sh"
+alias live="live-server --browser=luakit . &"
 
 # }}}
+
 
 # Reload para ST
 
