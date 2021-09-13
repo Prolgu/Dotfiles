@@ -30,9 +30,9 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_tags_command = 'ctags -R'
 " Border color
-let g:fzf_layout = {'up':'~80%', 'window': { 'width': 0.95, 'height': 0.85,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'rounded' } }
+let g:fzf_layout = {'up':'~80%', 'window': { 'width': 0.85, 'height': 0.75,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'rounded' } }
 " let g:fzf_layout = {'down':'~50%'}
-
+" let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
 
 let $FZF_DEFAULT_OPTS = '--layout=reverse-list --info=inline'
 let $FZF_DEFAULT_COMMAND="rg --files --hidden"

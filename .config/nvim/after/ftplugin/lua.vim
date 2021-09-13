@@ -22,7 +22,7 @@ inoremap <buffer>' ''<Esc>i
 inoremap <buffer>" ""<Esc>i
 inoremap <buffer>{ {}<Esc>i
 
-nnoremap <buffer> <F5> :w <bar> :LuaREPL<Cr>
+nnoremap <buffer> <F5> :w <bar> :LuaCMD<Cr>
 
 nnoremap " mMi"<esc>A"<esc>`M
 

@@ -8,17 +8,16 @@
     </head>
 
     <body>
-			<div class="header">
+			<div class="wrapper">
+			<main>
+				main content
+			</main>				
 
-			</div>
-
-			<div class="body">
 
 
-			</div>
-
-			<div class="foot">
-
+			<footer>
+				footer content
+			</footer>
 			</div>
 			<script src="myScript.js"></script> 
     </body>

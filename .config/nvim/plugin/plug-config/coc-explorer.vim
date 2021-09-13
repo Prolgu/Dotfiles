@@ -57,7 +57,7 @@ let g:coc_explorer_global_presets = {
       " \     'floating-position':'right-center',
             " \     'floating-height': 20,
 
-nmap <silent> <S-tab> :CocCommand explorer --preset floating<CR>
+nmap <silent> <S-tab> :CocCommand explorer<CR>
 
 " List all presets
 " nmap <leader>el :CocList explPresets<Cr>
@@ -65,7 +65,7 @@ nmap <silent> <S-tab> :CocCommand explorer --preset floating<CR>
 " Use preset argument to open it
 " nmap <silent> <leader>ed :CocCommand explorer --preset .vim<CR>
 " nmap <silent> <leader>ec :CocCommand explorer --preset cocConfig<CR>
-nmap <silent> <tab> :CocCommand explorer --preset buffer<CR>
+" nmap <silent> <tab> :CocCommand explorer --preset buffer<CR>
 " nmap <F2> :CocCommand explorer --preset floatingLeftside<Cr> 
 
 " autocmd User CocNvimInit :CocCommand explorer --preset simplify

@@ -6,7 +6,7 @@
 "============================================="
 set ts=4 sts=4 sw=4 et
 set bs=indent,eol,start
-
+set so=999
 "============================================="
 
 "================= Map-Zone =================="
@@ -14,7 +14,7 @@ set bs=indent,eol,start
 " Documentacion de referenciat w3schools/Python
 nnoremap <buffer> <F1> :w <bar> :!xdg-open https://www.w3schools.com/python/python_reference.asp<Cr><Cr>
 " Terminal interactiva
-nnoremap <buffer> <F5> :w <bar> :PyREPL<Cr>
+nnoremap <buffer> <F5> :w <bar> :PyCMD<Cr>
 
 "=============== Autocompletar ==============="
 

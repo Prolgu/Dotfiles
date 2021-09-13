@@ -27,10 +27,11 @@ set fillchars=fold:\
 set completeopt=menuone,noinsert,noselect
 
 set signcolumn=number
-set gcr=a:blinkon0
+" set gcr=a:blinkon0
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set clipboard+=unnamedplus
 set incsearch 
-set ignorecase
+set smartcase
 " Cursor on middle of buffer
 set scrolloff=999
 

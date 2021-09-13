@@ -83,19 +83,25 @@ vmp('n', '<C-Left>', ':vertical resize -2<CR>',opts)
 
 --}}}
 
--- SearchUC {{{=========================================
+-- Search {{{=========================================
 
 vmp('n', '<leader>/', '*',opts)
-
---}}}
-
--- SearchCenter {{{=========================================
 
 -- Search Next
 vmp('n', 'n', 'nzzzv', opts)
 
 -- Search Prev
 vmp('n', 'N', 'Nzzzv', opts)
+
+-- Go Definition
+vmp('n', 'g*', 'g*zz', opts)
+vmp('n', 'g#', 'g#zz', opts)
+
+--}}}
+
+-- Cursorcolumn {{{=========================================
+
+vmp('n', '<leader>tc', ':set cursorcolumn!<bar>:set cursorcolumn?<Cr>', opts)
 
 --}}}
 
@@ -150,6 +156,7 @@ vmp('n', '<leader>vs', ':<C-u>vsplit<CR>', opts)
 vmp('n', '<leader>p', ':Files<Cr>', opts)
 -- Buffers/Line
 vmp('n', '<leader>bb', ':Buffers<Cr>',opts)
+vmp('n', '<tab>', ':Buffers<Cr>',opts)
 vmp('n', '<leader>bl', ':BLines<Cr>', opts)
 -- Marks
 vmp('n', '<leader>mk', ':Marks<Cr>', opts)
@@ -159,10 +166,15 @@ vmp('n', '<leader>mm', ':Maps<Cr>', opts)
 vmp('n', '<leader>hh', ':History<Cr>', opts)
 -- History :
 vmp('n', '<leader>hc', ':History:<Cr>', opts)
+-- History /
+vmp('n', '<leader>hb', ':History/<Cr>', opts)
 -- Commands
-vmp('n', '<leader>c', ':call fzf#vim#commands()<Cr>', opts)
+vmp('n', '<leader>cl', ':call fzf#vim#commands()<Cr>', opts)
 -- Filetypes
 vmp('n', '<leader>ft', ':Filetypes<Cr>', opts)
+
+-- LS
+vmp('n', '<leader>ls', ':LS<Cr>', opts)
 
 --}}}
 

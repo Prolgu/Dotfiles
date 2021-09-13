@@ -22,7 +22,7 @@ inoremap <buffer>{ {<Cr>}<Esc>O
 nnoremap <leader>z $bi('<esc>eli');<esc>o
 nnoremap ; $a;<esc>
 " nnoremap <space>  i<space><esc>
-nnoremap <silent><F5> :w <Bar> :CPPREPL<Cr>
+nnoremap <silent><F5> :w <Bar> :CppCMD<Cr>
 " nnoremap <silent><F7> :Format <Bar>:w<Cr>
 nnoremap <silent><F7>  :call Fermento()<Cr>
 "============================================="

@@ -1,9 +1,5 @@
-
-"============================================="
-"                  VIM-VIM                    "
-"============================================="
-
-
+" vim:fileencoding=utf-8:ft=vim:foldmethod=marker
+"VIM-VIM {{{1
 "============================================="
 
 set tabstop=2 softtabstop=2
@@ -11,6 +7,7 @@ set shiftwidth=2
 set expandtab
 set backspace=indent,eol,start
 set fileformat=unix
+set so=999
 
 "============================================="
 
@@ -23,7 +20,7 @@ set fileformat=unix
 " hi paren3 guifg=#00FF5F 
 " autocmd! VimEnter,BufWinEnter * syn match parens /[{}]/ | hi parens ctermfg=cyan
 hi MatchParen ctermbg=blue guibg=lightblue
-"================ Mapping  ==================="
+"Mapping {{{1
 
 nnoremap <F1> :help <C-r><C-w><CR>
 
@@ -35,4 +32,3 @@ inoremap <buffer>< <><Esc>i
 
 " nnoremap <buffer>H :echo expand('<cfile>')<Cr>
 
-"============================================="

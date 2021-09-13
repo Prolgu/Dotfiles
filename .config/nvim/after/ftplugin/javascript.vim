@@ -11,7 +11,7 @@ set backspace=indent,eol,start
 " Documentacion w3schools/JavaScript {{{=========================
 
 nnoremap <buffer><silent> <F1> :w <Bar> !xdg-open https://www.w3schools.com/jsref/default.asp<Cr><Cr>
-noremap <buffer><silent> <F5> :w! <bar> :JsREPL<Cr>
+noremap <buffer><silent> <F5> :w! <bar> :JsCMD<Cr>
 " }}}
 
 " Autocompletar ==============================
@@ -27,12 +27,12 @@ noremap <buffer><silent> <F5> :w! <bar> :JsREPL<Cr>
 "inoremap <buffer>{ {<Cr>}<Esc>O
 
 " add mapping for auto closing
-imap <buffer>"<tab> ""<Left>
-imap <buffer>'<tab> ''<Left>
-imap <buffer>(<tab> ()<Left>
-imap <buffer>[<tab> []<Left>
-imap <buffer>{<tab> {}<Left>
-imap <buffer>{<CR> {<CR>}<ESC>O
+imap <buffer>"<Tab> ""<Left>
+imap <buffer>'<Tab> ''<Left>
+imap <buffer>(<Tab> ()<Left>
+imap <buffer>[<Tab> []<Left>
+imap <buffer>{<Tab> {}<Left>
+imap <buffer>{<Cr> {<Cr>}<Esc>O<Tab>
 " imap <buffer>{;<CR> {<CR>};<ESC>O
 
 

@@ -19,22 +19,25 @@ let g:coc_snippet_prev = '<c-k>'
 let g:coc_global_extensions = [
   \ 'coc-explorer',
   \ "coc-snippets",
-  \ 'coc-highlight',
+  \ 'coc-css',
   \ 'coc-clangd',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
   \ 'coc-html',
+  \ 'coc-java',
   \ 'coc-pyright',
+  \ 'coc-highlight',
   \ 'coc-git',
+  \ 'coc-eslint',
+  \ 'coc-rust-analyzer',
   \ ]
 
+  " \ 'coc-tslint',
+  " \ 'coc-prettier',
   " \ 'coc-ultisnips',
   " \ 'coc-json',
   " \ 'coc-tailwindcss',
   " \ 'coc-vetur',
-  " \ 'coc-tslint',
-  " \ 'coc-prettier',
-  " \ 'coc-eslint',
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)

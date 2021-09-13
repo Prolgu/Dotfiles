@@ -1,23 +1,23 @@
 " vim:fileencoding=utf-8:ft=vim:foldmethod=marker
 
 " TermColor {{{
-
-let g:terminal_color_0  = '#1A1A26'
-let g:terminal_color_1  = '#EC256D'
-let g:terminal_color_2  = '#00ffff'
-let g:terminal_color_3  = '#FD971F'
-let g:terminal_color_4  = '#458588'
-let g:terminal_color_5  = '#b16286'
-let g:terminal_color_6  = '#536D24'
-let g:terminal_color_7  = '#a89984'
-let g:terminal_color_8  = '#928374'
-let g:terminal_color_9  = '#fb4934'
-let g:terminal_color_10 = '#00df5f'
-let g:terminal_color_11 = '#fabd2f'
-let g:terminal_color_12 = '#00afff'
-let g:terminal_color_13 = '#d3869b'
-let g:terminal_color_14 = '#8ec07c'
-let g:terminal_color_15 = '#ebdbb2'
+" let g:terminal_color_0  = '#313435'
+" let g:terminal_color_0  = '#1A1A26'
+" let g:terminal_color_1  = '#EC256D'
+" let g:terminal_color_2  = '#00ffff'
+" let g:terminal_color_3  = '#FD971F'
+" let g:terminal_color_4  = '#458588'
+" let g:terminal_color_5  = '#b16286'
+" let g:terminal_color_6  = '#536D24'
+" let g:terminal_color_7  = '#a89984'
+" let g:terminal_color_8  = '#928374'
+" let g:terminal_color_9  = '#fb4934'
+" let g:terminal_color_10 = '#00df5f'
+" let g:terminal_color_11 = '#fabd2f'
+" let g:terminal_color_12 = '#00afff'
+" let g:terminal_color_13 = '#d3869b'
+" let g:terminal_color_14 = '#8ec07c'
+" let g:terminal_color_15 = '#ebdbb2'
 
 " }}}
 

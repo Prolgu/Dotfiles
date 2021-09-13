@@ -1,39 +1,10 @@
-:root{
-
+wrapper{
+	max-width:980px;
+	margin:0 auto;
 }
 
-
-head{
-
-}
-
-
-body{
-
-}
-
-.header{
-
-}
-
-
-.body{
-
-}
-
-.leftCol{
-
-}
-.rightCol{
-
-}
-				
-.main{
-
-}
-
-.foot{
-
+img,video{
+	max-width:100%;
 }
 
 

@@ -270,8 +270,8 @@ augroup END
 
 
 " Set active / inactive statusline after entering, leaving buffer
-augroup SetStslineline
-    autocmd!
-    autocmd BufEnter,WinEnter * call ActivateStatusline()
-    autocmd BufLeave,WinLeave * call DeactivateStatusline()
-augroup END
+" augroup SetStslineline
+"     autocmd!
+"     autocmd BufEnter,WinEnter * call ActivateStatusline()
+"     autocmd BufLeave,WinLeave * call DeactivateStatusline()
+" augroup END
