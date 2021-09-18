@@ -25,3 +25,7 @@ Estos archivos de configuración los uso principalmente para dos cosas:
 * ZSH Theme: [P10K](https://github.com/romkatv/powerlevel10k)
 * Compositor: [Picom (ibhagwan)](https://github.com/ibhagwan/picom)
 * Desktop background browser: [Nitrogen](https://github.com/l3ib/nitrogen)
+### Otras herramientas:
+* Pandoc
+* Texlive
+* maim

@@ -11,13 +11,19 @@
 * {
   black:      #1B2229;
   red:        #ff6c6b;
+  darkred:    #E53935;
   green:      #98be65;
+  green2:     #A3BE8C;
+  darkgreen:  #388E3C;
   yellow:     #ECBE7B;
   blue:       #51afef;
   mangenta:   #c678dd;
+  purple:     #7B1FA2;
   cyan:       #46D9FF;
   emphasis:   #2257A0;
-  text:       #bbc2cf;
+  /* emphasis:   #8e24aa; */
+  /* text:       #bbc2cf; */
+  text:      #ffffff;
   text-alt:   #5B6268;
   fg:         #bbc2cf;
   bg:         #282c34dd;
@@ -27,9 +33,9 @@
 }
 
 window {
-  transparency: "real";
+  transparency: "screenshot";
   background-color: @bg;
-  text-color: @text;
+  /* text-color: @text; */
   border: 0px;
   border-color: @red;
   border-radius: 0px;
@@ -52,7 +58,7 @@ inputbar {
 
 prompt {
   enabled: true;
-  text-color: @red;
+  text-color: @green2;
   border: 0 1px 0 0;
   padding: 0% 0% 0% 1%;
 }
@@ -66,7 +72,8 @@ textbox-prompt-colon {
 entry {
   margin: 0px 10px;
   horizontal-align: 0;
-  text-color: @text;
+  text-color: @white;
+  /* color: @green2; */
   placeholder: "Search";
   placeholder-color: @text-alt;
   blink: true;
@@ -77,18 +84,21 @@ listview {
   dynamic: true;
   layout: vertical;
   scrollbar: false;
+  lines:10;
+  columns:2;
+  text-color:@white;
 }
 
 element {
   padding: 5px;
-  text-color: @text-alt;
+  text-color: @text;
   border-radius: 5px;
   orientation: horizontal;
 }
 
 element selected {
-  /* background-color: @emphasis; */
-  background-color: #3f444a;
+  background-color: @darkred;
+  /* background-color: #3f444a; */
   text-color: @text;
 }
 
@@ -97,7 +107,7 @@ element urgent, element selected urgent {
 }
 
 element active, element selected active {
-  text-color: @purple;
+  text-color: @text;
 }
 
 /* Increase icons size */
@@ -114,12 +124,15 @@ message {
 }
 
 button {
-  text-color: @text;
+  text-color: @fg;
   border-radius: 5px;
+  /* background-color:@emphasis; */
 }
 
 button selected {
-  background-color: #3f444a;
+  /* background-color: #3f444a; */
+  text-color: @bg;
+  background-color:@darkred;
 }
 
 mode-switcher {

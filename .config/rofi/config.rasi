@@ -1,10 +1,8 @@
 configuration {
-  terminal: "st";
   /* modi: "combi,window,drun,ssh,file-browser"; */
   /* combi-modi: "drun,window"; */
-  lines:10;
-  columns:2;
-  modi: "window,drun,ssh,file-browser,calc";
+  terminal:"st";
+  modi: "window,drun,ssh,filebrowser,calc";
   /* font: "Noto Sans Bold 10"; */
   font: "Fira Code Bold 10";
   show-icons: true;

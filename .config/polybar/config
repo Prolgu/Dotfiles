@@ -1,4 +1,4 @@
-;==========================================================
+; vim:ft=dosini:foldmethod=marker ========================
 ;
 ;
 ;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
@@ -43,17 +43,21 @@ active-light = #313435
 
 red=#ff6c6b
 green=#A3BE8C
+yellow=#FFC107
 
 
 [bar/example]
 
-tray-position = right
-tray-padding-left=2
-tray-padding-right=2
+; tray-position = right
+; tray-padding-left=2
+; tray-padding-right=2
 
 
 monitor = eDP1
-width =  100%
+width = 100%
+; width =  90%
+; offset-x=5%
+; offset-y=1%
 height = 20
 padding-left = 1
 padding-right = 1
@@ -69,11 +73,13 @@ border-bottom-color = ${colors.background}
 
 line-size = 0
 wm-restack = bspwm
-; wireless separator
-modules-left =  HTB separator target  
+; modules-left = time separator  wlan alsa cpu separator  
+
+modules-left = time separator cpu separator mpd
 modules-center = bspwm
 ; modules-right = wlan alsa  battery cpu  mem time powermenu
-modules-right = wlan battery time powermenu
+modules-right = salsa battery bluetooth net
+; modules-right = cstm 
 
 font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=12;3
 ; font-1 = Material Design Icons:style=Regular:size=12;2
@@ -83,10 +89,18 @@ font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=12;3
 [module/separator]
 type = custom/text
 
-content = %{T3}   %{T-}
+content = %{T3}  %{T-}
 content-foreground = #2b2f37
 content-padding-left=1
 content-padding-right=1
+
+
+[module/cstm]
+type=custom/text
+; label=%{F#1bbf3e} %{F#ff6c6b}  %{F#ff6c6b} 
+content=%{F#1bbf3e} %{F#FFC107}  %{F#FF6C6B}  %{F#FF9800}  
+content-background = #2b2f37
+content-padding=2
 
 [module/HTB]
 type = custom/script
@@ -121,49 +135,28 @@ format-offset=2
 type = custom/script
 
 label=%output%
-label-padding=2
+label-padding-left=1
+label-padding-right=3
 tail=true
 
 interval = 2
 exec = ~/.scripts/poly_net.sh
+click-left= st -e nmtui
+click-right= st -e nmtui
 
+label-background=#2b2f37
 
-[module/mpd]
-type = internal/mpd
-
-interval = 1
-
-format-online = <icon-prev><toggle><icon-next><label-song><label-time>
-format-online-prefix = 
-format-online-prefix-foreground = ${color.green}
-
-label-song =  " %artist% - %title%"
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-label-time = " %elapsed% / %total%"
-
-label-offline = " Offline"
-
-icon-play = 
-icon-pause = 
-icon-stop = 
-icon-next = 
-icon-prev = 
-
-toggle-on-foreground = ${color.primary}
-toggle-off-foreground = ${color.secondary}
-
-[module/alsa]
+[module/salsa]
 type = internal/alsa
 
 format-volume = <ramp-volume><label-volume>
-label-volume = %percentage%%
-; label-volume-background=${colors.dark-light}
-;label-volume-foreground = ${root.foreground}
-
+label-volume ="%percentage%% " 
+label-volume-background=${colors.dark-light}
+label-volume-foreground = ${root.foreground}
+click-right = Pavucontrol
 label-muted =" 婢 Muted"
 label-muted-foreground = ${color.sep}
+; label-volume-padding=1
 ; label-muted-background =${colors.dark-light}
 
 ; ramp-volume-padding=1
@@ -175,6 +168,9 @@ ramp-volume-2 =" "
 ramp-volume-2-foreground = ${color.sep}
 
 format-volume-background=${colors.dark-light}
+format-volume-padding=1
+
+
 
 [module/bspwm]
 type = internal/bspwm
@@ -188,12 +184,12 @@ reverse-scroll = false
 
 
 format = <label-state> 
-format-padding-left=4
-format-padding-right=4
+format-padding-left=3
+format-padding-right=3
 
 ; format-fixed-center=true
 
-format-offset-y=-1%
+; format-offset-y=-1%
 ; ws-icon-0 = 1;%{F#D8DEE9} 
 ; ws-icon-1 = 2;%{F#BF616A}   
 ; ws-icon-2 = 3;%{F#EBCB8B}    
@@ -206,28 +202,28 @@ icon-2 = 3;
 icon-3 = 4;
 icon-4 = 5;
 
-icon-default = 
+; icon-default = 
 
 label-active = 
-label-active-background = ${colors.active-light}
+; label-active-background = ${colors.active-light}
 ; label-active-background = ${colors.background} 
 label-active-foreground = ${colors.red}
 label-active-padding = 2
 
 label-occupied = 
-label-occupied-background = ${colors.active-light}
+; label-occupied-background = ${colors.active-light}
 ; label-occupied-background = ${colors.background}
 label-occupied-foreground = ${colors.green}
 label-occupied-padding = 2
 
 label-urgent = 
-label-urgent-background = ${colors.active-light}
+; label-urgent-background = ${colors.active-light}
 ; label-urgent-background = ${colors.background}
 label-urgent-foreground = ${colors.red}
 label-urgent-padding = 2
 
 label-empty = 
-label-empty-background = ${colors.active-light}
+; label-empty-background = ${colors.active-light}
 ; label-empty-background = ${colors.background}
 label-empty-foreground = ${colors.color7}
 label-empty-padding = 2
@@ -242,83 +238,32 @@ format = <label>
 format-background = #a3be8c
 format-padding = 1
 
-date = %{F#282A36}󰥔 %H:%M%{F-}
-time-alt = %{F#282A36}󰃭 %a, %b %d%{F-}
+date ="%H:%M%"
+time-alt ="%a, %b %d%"
 
-label = %date%%time%
+label = "%date%%time%"
+label-foreground=#282A36
 
-
-[module/mem]
+[module/bluetooth]
 type = custom/script
 
-exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
-format = <label>
-label =  %output% M
-label-padding = 1
-label-foreground = #88C0D0
-label-background = ${colors.background}
+label=%output%
+label-padding-left=2
+label-padding-right=1
+tail=true
 
-
-
-; [module/powermenu]
-; type = custom/text 
-; content =" " 
-; content-padding =0
-; click-left = doas zzz &
-; content-foreground =  #000
-; content-background = #A3BE8C
-
-
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = false
-#format-spacing = 1
-label-padding=1
-label-open = 
-label-open-foreground = ${colors.background}
-label-open-background = #A3BE8C  
-label-open-padding = 1
-label-close = 
-label-close-foreground = ${colors.background}
-label-close-background = #BF616A 
-
-label-close-padding = 1
-
-label-separator = " | "
-label-separator-background = #A3BE8C
-label-separator-foreground = ${colors.background}
-
-
-menu-0-0 = 
-menu-0-0-exec = systemctl poweroff
-menu-0-1 = 
-menu-0-1-exec = systemctl reboot
-menu-0-2 = 
-menu-0-2-exec = bspc quit
-; menu-0-2 = 
-; menu-0-2-exec = sudo zzz
-; menu-0-4 = 
-; menu-0-4-exec = xset dpms force off
-
-menu-0-0-padding=1
-menu-0-0-foreground=${colors.background}
-menu-0-0-background=#A3BE8C
-
-menu-0-1-padding=1
-menu-0-1-foreground=${colors.background}
-menu-0-1-background=#A3BE8C
-
-menu-0-2-padding=1
-menu-0-2-foreground=${colors.background}
-menu-0-2-background=#A3BE8C
-
+; exec =rofi-bluetooth --status
+exec = ~/.scripts/rofi-blue.sh --status
+interval = 1
+; click-left = ~/.scripts/rofi-blue.sh &
+click-left= blueberry &
+; padding=1
+label-background=#2b2f37
 
 [module/wire]
 type = custom/script
 
-label=%output%
+label= %output%
 label-padding=2
 tail=true
 interval = 2
@@ -334,32 +279,20 @@ type = internal/network
 interface = wlan0
 interval = 3.0
 
-label-connected-padding=1
-label-disconnected-padding=1
+; label-connected-padding=1
+; label-disconnected-padding=1
 
 format-connected =  <label-connected>
-label-connected = "  On " 
-
-label-disconnected = "睊  Off " 
-label-disconnected-foreground = #BF616A 
-
-; label-connected =   %essid%
+label-connected = " " 
 label-connected-foreground = #A3BE8C 
+; label-connected-background = #313435 
+label-connected-padding=1
 
-[module/wireless]
-type = internal/network
-
-interface = wlan0
-interval = 3.0
-label-connected-padding-left=1
-label-connected-padding-right=1
-; label-connected-padding-top=8
-format-connected = <label-connected>
-label-connected = %{F#ffff00}%{F-}%local_ip% 
-; label-padding=1
-label-connected-background=#2b2f37
-; label-connected-foreground=#A3BE8C
-label-connected-foreground=#ffffff
+label-disconnected = " 睊" 
+label-disconnected-foreground = #BF616A 
+; label-disconnected-background = #313435 
+label-disconnected-padding=1
+; label-connected =   %essid%
 
 
 [module/battery]
@@ -426,63 +359,63 @@ label-animation-charging-framerate = 750
 format-charging-padding = 1
 format-discharging-padding = 1
 
-[module/pulseaudio]
-type = internal/pulseaudio
 
-;format-volume = <ramp-volume> <label-volume>
-format-volume = <ramp-volume> <bar-volume>
-label-volume = %percentage%%
-;label-volume-foreground = ${root.foreground}
+; [module/cpu]
+; type = internal/cpu
 
-label-muted = "婢"
-label-muted-foreground = ${color.sep}
+; interval = 0.8
+; format = <ramp-coreload>
 
-ramp-volume-0 =
-ramp-volume-0-foreground = ${color.sep}
-ramp-volume-1 = 
-ramp-volume-1-foreground = ${color.sep}
-ramp-volume-2 = 
-ramp-volume-2-foreground = ${color.sep}
+; ramp-coreload-spacing = 1
 
-; Only applies if <bar-volume> is used
-bar-volume-format = "%fill%%indicator%%empty%"
-bar-volume-width = 10
-bar-volume-gradient = true
+; ramp-coreload-0 =" "
+; ramp-coreload-0-foreground = #81C784
+; ramp-coreload-1 =" "
+; ramp-coreload-1-foreground = #1bbf3e
+; ramp-coreload-2 =" "
+; ramp-coreload-2-foreground = #FFEB3B
+; ramp-coreload-3 =" "
+; ramp-coreload-3-foreground = #FF9800
+; ramp-coreload-4 =" "
+; ramp-coreload-4-foreground = #F57C00
+; ramp-coreload-5 =" "
+; ramp-coreload-5-foreground = #FF5722
+; ramp-coreload-6 =" "
+; ramp-coreload-6-foreground = #D84315
+; ; ramp-coreload-font = 2
+; format-background = #313435
+; ; format-foreground = ${colors.gmagenta}
+; ; format-underline = ${colors.foreground-alt}
+; format-padding = 1
 
-bar-volume-indicator = ${bar.indicator}
-bar-volume-indicator-foreground = ${color.foreground}
-bar-volume-indicator-font = 4
+[module/xwindow]
+type = internal/xwindow
+label = %title%:0:30:...
 
-bar-volume-fill = ${bar.fill}
-bar-volume-fill-font = 4
-bar-volume-foreground-0 = ${color.green}
-bar-volume-foreground-1 = ${color.yellow}
-bar-volume-foreground-2 = ${color.red}
 
-[module/volume]
-type = custom/script
+[module/alsa]
+type = internal/alsa
 
-exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
-format = <label>
-internal = 5.0
-; label =  %output% 
-label-prefix=" "
-label=%percentage%%
-label-foreground = #BF616A
-label-padding = 1
+format-volume = <ramp-volume>
+label-muted =""
+label-muted-foreground =#3F51B5 
+label-muted-padding=1
+label-muted-background=#313435
 
-[module/xbacklight]
-type = internal/xbacklight
+; ramp-volume-padding=1
+ramp-volume-0 =" "
+ramp-volume-0-foreground = #1bbf3e
+ramp-volume-1 =" "
+ramp-volume-1-foreground = #1bbf3e
+ramp-volume-2 =" "
+ramp-volume-2-foreground = #FFEB3B
+ramp-volume-3 =" "
+ramp-volume-3-foreground = #FF9800
+ramp-volume-4 =" "
+ramp-volume-4-foreground = #F57C00
 
-format = <label>
-format-prefix = "  "
-
-label = %percentage%%
-format-prefix-foreground = #D8DEE9
-label-foreground =   #D8DEE9
-#format-background = ${colors.foreground}
-format-padding = 1
-
+format-volume-background=#313435
+format-volume-padding=1
 
 
 [module/cpu]
@@ -490,19 +423,164 @@ type = internal/cpu
 
 
 format =  <label> 
-format-padding = 2
+format-padding = 1
 label = CPU %percentage%%
 format-background = #81A1C1
 format-foreground = ${colors.background}
 interval = 2.5
-; label-separator="  "   
-
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...
+label-separator="  "   
+; click-left =st -e htop &
 
 
 
+; Deprecated {{{1
+
+; [module/powermenu]
+; type = custom/text 
+; content =" " 
+; content-padding =0
+; click-left = doas zzz &
+; content-foreground =  #000
+; content-background = #A3BE8C
 
 
-; vim:ft=dosini
+
+; [module/powermenu]
+; type = custom/menu
+
+; expand-right = false
+; #format-spacing = 1
+; label-padding=1
+; label-open = 
+; label-open-foreground = ${colors.background}
+; label-open-background = #A3BE8C  
+; label-open-padding = 1
+; label-close = 
+; label-close-foreground = ${colors.background}
+; label-close-background = #BF616A 
+
+; label-close-padding = 1
+
+; label-separator = " | "
+; label-separator-background = #A3BE8C
+; label-separator-foreground = ${colors.background}
+
+
+; menu-0-0 = 
+; menu-0-0-exec = systemctl poweroff
+; menu-0-1 = 
+; menu-0-1-exec = systemctl reboot
+; menu-0-2 = 
+; menu-0-2-exec = bspc quit
+; ; menu-0-2 = 
+; ; menu-0-2-exec = sudo zzz
+; ; menu-0-4 = 
+; ; menu-0-4-exec = xset dpms force off
+
+; menu-0-0-padding=1
+; menu-0-0-foreground=${colors.background}
+; menu-0-0-background=#A3BE8C
+
+; menu-0-1-padding=1
+; menu-0-1-foreground=${colors.background}
+; menu-0-1-background=#A3BE8C
+
+; menu-0-2-padding=1
+; menu-0-2-foreground=${colors.background}
+; menu-0-2-background=#A3BE8C
+
+; [module/mem]
+; type = custom/script
+
+; exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
+; format = <label>
+; label =  %output% M
+; label-padding = 1
+; label-foreground = #88C0D0
+; label-background = ${colors.background}
+
+[module/mpd]
+type = internal/mpd
+
+interval = 1
+
+; format-online = <icon-prev><toggle><icon-next><label-song><label-time>
+format-online = <label-song>
+format-online-prefix = 
+format-online-prefix-foreground = ${color.green}
+
+; label-song =  " %artist% - %title%"
+label-song =  "%title%"
+label-song-maxlen = 30
+label-song-ellipsis = true
+
+label-time = " %elapsed% / %total%"
+
+label-offline = " Offline"
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-next = 
+icon-prev = 
+
+toggle-on-foreground = ${color.primary}
+toggle-off-foreground = ${color.secondary}
+
+
+
+;[module/pulseaudio]
+;type = internal/pulseaudio
+
+;;format-volume = <ramp-volume> <label-volume>
+;format-volume = <ramp-volume> <bar-volume>
+;label-volume = %percentage%%
+;;label-volume-foreground = ${root.foreground}
+
+;label-muted = "婢"
+;label-muted-foreground = ${color.sep}
+
+;ramp-volume-0 =
+;ramp-volume-0-foreground = ${color.sep}
+;ramp-volume-1 = 
+;ramp-volume-1-foreground = ${color.sep}
+;ramp-volume-2 = 
+;ramp-volume-2-foreground = ${color.sep}
+
+;; Only applies if <bar-volume> is used
+;bar-volume-format = "%fill%%indicator%%empty%"
+;bar-volume-width = 10
+;bar-volume-gradient = true
+
+;bar-volume-indicator = ${bar.indicator}
+;bar-volume-indicator-foreground = ${color.foreground}
+;bar-volume-indicator-font = 4
+
+;bar-volume-fill = ${bar.fill}
+;bar-volume-fill-font = 4
+;bar-volume-foreground-0 = ${color.green}
+;bar-volume-foreground-1 = ${color.yellow}
+;bar-volume-foreground-2 = ${color.red}
+;[module/volume]
+;type = custom/script
+
+;exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
+;format = <label>
+;internal = 5.0
+;; label =  %output% 
+;label-prefix=" "
+;label=%percentage%%
+;label-foreground = #BF616A
+;label-padding = 1
+
+;[module/xbacklight]
+;type = internal/xbacklight
+
+;format = <label>
+;format-prefix = "  "
+
+;label = %percentage%%
+;format-prefix-foreground = #D8DEE9
+;label-foreground =   #D8DEE9
+;#format-background = ${colors.foreground}
+;format-padding = 1

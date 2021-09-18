@@ -28,7 +28,7 @@ vmp('i', '<F4>', '<Esc>:Termy<Cr>', opts)
 -- Delete/VSelect {{{=========================================
 
 -- Delete to Black Hole
-vmp('n', 'x', '"_x', opts)
+-- vmp('n', 'x', '"_x', opts)
 vmp('n', 'X', '"_x', opts)
 -- Dont lose VSelect
 -- vmp('v', 'y', 'ygv<Esc>', opts)
@@ -94,8 +94,8 @@ vmp('n', 'n', 'nzzzv', opts)
 vmp('n', 'N', 'Nzzzv', opts)
 
 -- Go Definition
-vmp('n', 'g*', 'g*zz', opts)
-vmp('n', 'g#', 'g#zz', opts)
+-- vmp('n', 'g*', 'g*zz', opts)
+-- vmp('n', 'g#', 'g#zz', opts)
 
 --}}}
 
@@ -112,13 +112,17 @@ vmp('n', '<Down>', '<nop>',opts)
 vmp('i', '<PageUp>', '<nop>',opts)
 vmp('i', '<PageDown>', '<nop>',opts)
 
+vmp('i', '<q:>', '<nop>',opts)
 vmp('n', 'Q', '<nop>', opts)
 
 --}}}
 
 -- Path {{{=========================================
 
-vmp('n', '<leader>.', ':echo expand(\'%:p:h\')<Cr>', opts)
+-- vmp('n', '<leader>.', ':echo expand(\'%:p:h\')<Cr>', opts)
+vmp('n', '<leader>.', ':pwd<Cr>', opts)
+vmp('n', '<leader>cd', ':lcd %:p:h<Cr>', opts)
+
 
 --}}}
 
@@ -140,12 +144,13 @@ vmp('v', '<leader>gg', ':Go<Cr>', opts)
 -- IndentGuides {{{=========================================
 
 vmp('n', '<leader>ig', ':call IndentGuides()<Cr>', opts)
+vmp('n', '==', 'gg=G', opts)
 
 --}}}
 
 -- Splits {{{=========================================
 
-vmp('n', '<leader>hs', ':<C-u>split<CR>', opts)
+vmp('n', '<leader>sp', ':<C-u>split<CR>', opts)
 vmp('n', '<leader>vs', ':<C-u>vsplit<CR>', opts)
 
 --}}}
@@ -153,7 +158,7 @@ vmp('n', '<leader>vs', ':<C-u>vsplit<CR>', opts)
 -- FzF {{{=========================================
 
 -- Files
-vmp('n', '<leader>p', ':Files<Cr>', opts)
+vmp('n', '<leader>ff', ':Files<Cr>', opts)
 -- Buffers/Line
 vmp('n', '<leader>bb', ':Buffers<Cr>',opts)
 vmp('n', '<tab>', ':Buffers<Cr>',opts)
@@ -172,6 +177,8 @@ vmp('n', '<leader>hb', ':History/<Cr>', opts)
 vmp('n', '<leader>cl', ':call fzf#vim#commands()<Cr>', opts)
 -- Filetypes
 vmp('n', '<leader>ft', ':Filetypes<Cr>', opts)
+-- RipGrep 
+vmp('n', '<leader>rg', ':Rg<Cr>', opts)
 
 -- LS
 vmp('n', '<leader>ls', ':LS<Cr>', opts)
@@ -263,6 +270,12 @@ vmp('t', ':q!', '<C-\\><C-n>:q!<Cr>', opts)
 vmp('n', '<leader>fo', ':Format<Cr>', opts)
 
 --}}}
+
+-- Visual  {{{=========================================
+
+vmp('n', '<leader>a', 'ggVG', opts)
+
+-- }}} 
 
 -- vmp('v', ';', ':', opts)
 -- vmp('n', ';', ':', opts)
