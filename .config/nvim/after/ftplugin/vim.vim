@@ -7,7 +7,7 @@ set shiftwidth=2
 set expandtab
 set backspace=indent,eol,start
 set fileformat=unix
-set so=999
+" set so=999
 
 "============================================="
 

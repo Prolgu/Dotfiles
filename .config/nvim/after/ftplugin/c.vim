@@ -2,7 +2,7 @@
 " Settings {{{1
 set ts=4 sts=4 sw=4 et
 set bs=indent,eol,start
-set so=999
+" set so=999
 
 " Autocompletar {{{1
 

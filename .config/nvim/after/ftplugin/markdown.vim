@@ -5,7 +5,7 @@
 set ts=2 sw=2 sts=2 
 set et 
 set bs=indent,eol,start
-set so=999
+" set so=999
 set linebreak
 set wrap nolist
 setlocal textwidth=80

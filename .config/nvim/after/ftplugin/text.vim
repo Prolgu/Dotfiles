@@ -7,7 +7,7 @@ syntax off
 setlocal spell spelllang=en_us
 set ts=4 sts=4 sw=4 expandtab
 set backspace=indent,eol,start
-set so=999
+" set so=999
 
 "********************************************************
 

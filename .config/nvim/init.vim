@@ -1,12 +1,12 @@
 " Mi NVimRC ===================================================
 " =============================================================
 "
-"       ██╗███╗   ██╗██╗████████╗ ██╗   ██╗██╗███╗   ███╗
-"       ██║████╗  ██║██║╚══██╔══╝ ██║   ██║██║████╗ ████║
-"       ██║██╔██╗ ██║██║   ██║    ██║   ██║██║██╔████╔██║
-"       ██║██║╚██╗██║██║   ██║    ╚██╗ ██╔╝██║██║╚██╔╝██║
-"       ██║██║ ╚████║██║   ██║ ██╗ ╚████╔╝ ██║██║ ╚═╝ ██║
-"       ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝ ╚═╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+"     ██╗ ███╗   ██╗ ██╗████████╗ ██╗   ██╗ ██╗ ███╗   ███╗
+"     ██║ ████╗  ██║ ██║╚══██╔══╝ ██║   ██║ ██║ ████╗ ████║
+"     ██║ ██╔██╗ ██║ ██║   ██║    ██║   ██║ ██║ ██╔████╔██║
+"     ██║ ██║╚██╗██║ ██║   ██║    ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║
+"     ██║ ██║ ╚████║ ██║   ██║ ██╗ ╚████╔╝  ██║ ██║ ╚═╝ ██║
+"     ╚═╝ ╚═╝  ╚═══╝ ╚═╝   ╚═╝ ╚═╝  ╚═══╝   ╚═╝ ╚═╝     ╚═╝
 "      
 " =============================================================
 " =============================================================
@@ -24,6 +24,7 @@ if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
+
 filetype plugin indent on
 
 " }}}
@@ -32,11 +33,12 @@ filetype plugin indent on
 
 call plug#begin('~/.config/nvim/plugged')
 " Theming ====================
-Plug 'tomasr/molokai'   " Mi tema favorito
+" Plug 'tomasr/molokai'   " Mi tema favorito
 Plug 'morhetz/gruvbox'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'akinsho/nvim-bufferline.lua'    "Bufferline en lua
+" Plug 'akinsho/nvim-bufferline.lua'    "Bufferline en lua
 Plug 'glepnir/dashboard-nvim'
 
 " Plug 'mhinz/vim-startify'     " Startify
@@ -64,9 +66,11 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'simnalamburt/vim-mundo' "Undo tree
 Plug 'hrsh7th/nvim-compe'
 
+Plug 'karb94/neoscroll.nvim' " Fast and smooth scroll
+
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " Markdown preview
-Plug 'turbio/bracey.vim',{'do': 'npm install --prefix server'}
+" Plug 'turbio/bracey.vim',{'do': 'npm install --prefix server'}
 
 call plug#end()
 
@@ -75,10 +79,11 @@ call plug#end()
 " Lua-Call {{{ =================================================
 
 " lua require('line')
-lua require('buffy')
+" lua require('buffy')
 lua require('map')
 lua require('tree')
 lua require('lsp')
+lua require('neoscr')
 
 " }}}
 
@@ -185,6 +190,9 @@ endif
 "}}}
 
 " Autocmd {{{ ==================================================
+" CapsLock is esc now 
+au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 
 autocmd InsertEnter * :set nornu
 autocmd InsertLeave * :set rnu
@@ -196,6 +204,7 @@ autocmd InsertLeave * :set rnu
 autocmd TermOpen * startinsert
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 au BufRead,BufNewFile *.md setlocal textwidth=80
+" autocmd FileType dashboard setlocal showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
 
 " }}}
 
@@ -224,7 +233,7 @@ augroup END
 " augroup END
 
 " add highlight to rofi files
-au BufReadPost *.rasi set ft=css
+au BufReadPost *.rasi set syntax=css
 
 augroup CocExplorerCustom
   autocmd!
@@ -238,42 +247,17 @@ augroup END
 
 "}}}
 
-
+" If(nvim) {{{==================================================
 
 if has("nvim")
   au TermOpen * tnoremap <Esc> <c-\><c-n>
-  au TermEnter * setlocal scrolloff=0
-  au TermLeave * setlocal scrolloff=999
+  au TermEnter * setlocal scrolloff=0 signcolumn=no
+  au TermLeave * setlocal scrolloff=999 signcolumn=yes
   au FileType fzf tunmap <Esc>
 endif
 
-" depre {{{1
+" }}}
 
-" set fillchars=vert::
-" augroup myCmds
-" au!
-" autocmd VimEnter * silent !echo -ne "\e[2 q"
-" augroup END
-
-" augroup CursorLine
-"   au!
-"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-"   au WinLeave * setlocal nocursorline
-" augroup END
-
-" Compile/Run {{{2===============================================
-" nmap <leader>co :w <Cr> :!clear && gcc % <Cr>
-" nmap <leader>cr :w <Cr> :!clear && gcc % -o %< && ./%< <Cr>
-
-" vnoremap <leader>ff :echo expand('<cword>')<Cr>
-" nmap <leader>yw yiw
-
-" CapsLock is esc now! {{{2=====================================
-
-" au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-" au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-
+" command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 " vim:fileencoding=utf-8:ft=vim:foldmethod=marker
-
-

@@ -46,6 +46,37 @@ green=#A3BE8C
 yellow=#FFC107
 
 
+[bar/bottom]
+; monitor = eDP1
+; width = 100%
+
+bottom = true
+; modules-left = ...
+; width=20%
+; offset-x=40%
+
+width = 100%
+background = ${colors.background}
+foreground = ${colors.foreground}
+; override-redirect = true
+
+padding-left = 1
+padding-right = 1
+height = 24
+
+; border-top-size = 0
+; border-bottom-size = 0
+
+fixed-center=true
+modules-left = mpd separator
+modules-center=  bspwm i3
+modules-right= xbacklight salsa battery 
+
+font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=13.5;3
+
+; line-size = 0
+; wm-restack = bspwm
+
 [bar/example]
 
 ; tray-position = right
@@ -55,8 +86,8 @@ yellow=#FFC107
 
 monitor = eDP1
 width = 100%
-; width =  90%
-; offset-x=5%
+; width = 60%
+; offset-x= 20%
 ; offset-y=1%
 height = 20
 padding-left = 1
@@ -66,22 +97,24 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 bottom = false
 
-border-top-size = 6
-border-bottom-size = 6
+border-top-size = 4
+border-bottom-size = 4
 border-top-color = ${colors.background}
 border-bottom-color = ${colors.background}
+; tray to maintain in the center the center module
+fixed-center=true
 
-line-size = 0
+line-size = 1
 wm-restack = bspwm
 ; modules-left = time separator  wlan alsa cpu separator  
 
-modules-left = time separator cpu separator mpd
-modules-center = bspwm
+modules-left = time separator cpu
+modules-center =  polybar-windows
 ; modules-right = wlan alsa  battery cpu  mem time powermenu
-modules-right = salsa battery bluetooth net
+modules-right = bluetooth net
 ; modules-right = cstm 
 
-font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=12;3
+font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=11.5;3
 ; font-1 = Material Design Icons:style=Regular:size=12;2
 ; font-2 = unifont:fontformat=truetype:size=9:antialias=true;2
 
@@ -95,63 +128,13 @@ content-padding-left=1
 content-padding-right=1
 
 
-[module/cstm]
-type=custom/text
-; label=%{F#1bbf3e} %{F#ff6c6b}  %{F#ff6c6b} 
-content=%{F#1bbf3e} %{F#FFC107}  %{F#FF6C6B}  %{F#FF9800}  
-content-background = #2b2f37
-content-padding=2
-
-[module/HTB]
-type = custom/script
-
-label=%output%
-label-padding=2
-tail=true
-interval = 2
-exec = ~/.scripts/HTB.sh
-
-format-background=#2b2f37
-; format-padding-left=2
-; format-padding-right=2
-; format-offset=2
-
-[module/target]
-type=custom/script
-
-label=%output%
-label-padding=2
-tail=true
-interval=1
-exec = ~/.scripts/target.sh
-
-format-background=#2b2f37
-format-padding-left=2
-format-padding-right=2
-format-offset=2
-
-
-[module/net]
-type = custom/script
-
-label=%output%
-label-padding-left=1
-label-padding-right=3
-tail=true
-
-interval = 2
-exec = ~/.scripts/poly_net.sh
-click-left= st -e nmtui
-click-right= st -e nmtui
-
-label-background=#2b2f37
 
 [module/salsa]
 type = internal/alsa
 
 format-volume = <ramp-volume><label-volume>
 label-volume ="%percentage%% " 
-label-volume-background=${colors.dark-light}
+; label-volume-background=${colors.dark-light}
 label-volume-foreground = ${root.foreground}
 click-right = Pavucontrol
 label-muted =" 婢 Muted"
@@ -167,9 +150,28 @@ ramp-volume-1-foreground = ${color.sep}
 ramp-volume-2 =" "
 ramp-volume-2-foreground = ${color.sep}
 
-format-volume-background=${colors.dark-light}
+; format-volume-background=${colors.dark-light}
 format-volume-padding=1
 
+[module/i3]
+type = internal/i3
+
+pin-workspaces = false
+strip-wsnumbers = true
+index-sort = false 
+enable-scroll = false
+
+format = <label-state> 
+format-padding-right = 2
+
+label-unfocused-foreground = #8a7f8f
+label-unfocused-padding = 1
+
+label-focused-foreground = #c16772
+label-focused-padding = 1
+
+label-urgent-foreground = #e4b226
+label-urgent-padding = 1
 
 
 [module/bspwm]
@@ -178,14 +180,14 @@ type = internal/bspwm
 
 pin-workspaces = true
 inline-mode = true
-enable-click = false
+enable-click = true
 enable-scroll = false
 reverse-scroll = false
 
 
 format = <label-state> 
-format-padding-left=3
-format-padding-right=3
+format-padding-left=2
+format-padding-right=2
 
 ; format-fixed-center=true
 
@@ -390,8 +392,9 @@ format-discharging-padding = 1
 
 [module/xwindow]
 type = internal/xwindow
-label = %title%:0:30:...
-
+format = <label>
+label-maxlen = 35
+label=%title%
 
 [module/alsa]
 type = internal/alsa
@@ -431,73 +434,29 @@ interval = 2.5
 label-separator="  "   
 ; click-left =st -e htop &
 
+[module/polywins]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/polywins.sh 2>/dev/null
+format = <label>
+label = %output%
+label-padding = 1
+tail = true
 
+[module/polybar-windows]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/polybar-windows.sh
+format = <label>
+label = %output%
+label-padding = 1
+interval = 1
 
-; Deprecated {{{1
-
-; [module/powermenu]
-; type = custom/text 
-; content =" " 
-; content-padding =0
-; click-left = doas zzz &
-; content-foreground =  #000
-; content-background = #A3BE8C
-
-
-
-; [module/powermenu]
-; type = custom/menu
-
-; expand-right = false
-; #format-spacing = 1
-; label-padding=1
-; label-open = 
-; label-open-foreground = ${colors.background}
-; label-open-background = #A3BE8C  
-; label-open-padding = 1
-; label-close = 
-; label-close-foreground = ${colors.background}
-; label-close-background = #BF616A 
-
-; label-close-padding = 1
-
-; label-separator = " | "
-; label-separator-background = #A3BE8C
-; label-separator-foreground = ${colors.background}
-
-
-; menu-0-0 = 
-; menu-0-0-exec = systemctl poweroff
-; menu-0-1 = 
-; menu-0-1-exec = systemctl reboot
-; menu-0-2 = 
-; menu-0-2-exec = bspc quit
-; ; menu-0-2 = 
-; ; menu-0-2-exec = sudo zzz
-; ; menu-0-4 = 
-; ; menu-0-4-exec = xset dpms force off
-
-; menu-0-0-padding=1
-; menu-0-0-foreground=${colors.background}
-; menu-0-0-background=#A3BE8C
-
-; menu-0-1-padding=1
-; menu-0-1-foreground=${colors.background}
-; menu-0-1-background=#A3BE8C
-
-; menu-0-2-padding=1
-; menu-0-2-foreground=${colors.background}
-; menu-0-2-background=#A3BE8C
-
-; [module/mem]
-; type = custom/script
-
-; exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
-; format = <label>
-; label =  %output% M
-; label-padding = 1
-; label-foreground = #88C0D0
-; label-background = ${colors.background}
+[module/calendar]
+type = custom/script
+label = "󰃭"
+exec = ~/.config/polybar/polybar-scripts/calendar.sh
+click-left = ./calendar curr
+scroll-up = ./calendar next
+scroll-down = ./calendar prev
 
 [module/mpd]
 type = internal/mpd
@@ -527,60 +486,16 @@ icon-prev =
 toggle-on-foreground = ${color.primary}
 toggle-off-foreground = ${color.secondary}
 
+[module/xbacklight]
+type = internal/xbacklight
 
+format = <label>
+format-prefix = "  "
 
-;[module/pulseaudio]
-;type = internal/pulseaudio
+label = %percentage%%
+format-prefix-foreground = #D8DEE9
+label-foreground =   #D8DEE9
+; format-background = ${colors.foreground}
 
-;;format-volume = <ramp-volume> <label-volume>
-;format-volume = <ramp-volume> <bar-volume>
-;label-volume = %percentage%%
-;;label-volume-foreground = ${root.foreground}
+format-padding = 1
 
-;label-muted = "婢"
-;label-muted-foreground = ${color.sep}
-
-;ramp-volume-0 =
-;ramp-volume-0-foreground = ${color.sep}
-;ramp-volume-1 = 
-;ramp-volume-1-foreground = ${color.sep}
-;ramp-volume-2 = 
-;ramp-volume-2-foreground = ${color.sep}
-
-;; Only applies if <bar-volume> is used
-;bar-volume-format = "%fill%%indicator%%empty%"
-;bar-volume-width = 10
-;bar-volume-gradient = true
-
-;bar-volume-indicator = ${bar.indicator}
-;bar-volume-indicator-foreground = ${color.foreground}
-;bar-volume-indicator-font = 4
-
-;bar-volume-fill = ${bar.fill}
-;bar-volume-fill-font = 4
-;bar-volume-foreground-0 = ${color.green}
-;bar-volume-foreground-1 = ${color.yellow}
-;bar-volume-foreground-2 = ${color.red}
-;[module/volume]
-;type = custom/script
-
-;exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
-;format = <label>
-;internal = 5.0
-;; label =  %output% 
-;label-prefix=" "
-;label=%percentage%%
-;label-foreground = #BF616A
-;label-padding = 1
-
-;[module/xbacklight]
-;type = internal/xbacklight
-
-;format = <label>
-;format-prefix = "  "
-
-;label = %percentage%%
-;format-prefix-foreground = #D8DEE9
-;label-foreground =   #D8DEE9
-;#format-background = ${colors.foreground}
-;format-padding = 1

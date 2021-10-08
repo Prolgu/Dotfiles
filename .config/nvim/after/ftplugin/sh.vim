@@ -2,7 +2,7 @@
 set ts=4 sts=4 sw=4 
 set expandtab tw=120 
 set backspace=indent,eol,start
-set so=999
+" set so=999
 
 nnoremap <buffer><silent> <F5> :w! <bar>:ShCMD<Cr>
 
