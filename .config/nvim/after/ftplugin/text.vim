@@ -1,5 +1,5 @@
 " vim:fileencoding=utf-8:ft=vim:foldmethod=marker
-" Text.vim configs {{{1 
+" Text.vim configs {{{1
 
 set nornu
 syntax off
@@ -7,6 +7,10 @@ syntax off
 setlocal spell spelllang=en_us
 set ts=4 sts=4 sw=4 expandtab
 set backspace=indent,eol,start
+
+set linebreak
+set wrap nolist
+setlocal textwidth=80
 " set so=999
 
 "********************************************************
@@ -25,7 +29,6 @@ nnoremap <silent> <F7> :set spell!<cr>
 inoremap <silent> <F7> <C-O>:set spell!<cr>
 
 
-" inoremap <buffer>~n  
 
 " Especiales {{{1
 

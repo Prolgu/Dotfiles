@@ -6,7 +6,7 @@
 " setlocal iskeyword+=-
 
 set tabstop=2 sts=2 sw=2 tw=120 
-
+setlocal iskeyword+=-
 
 " Documentacion de referencias w3schools/css
 inoremap <buffer> <F1> :w <bar> :!xdg-open https://www.w3schools.com/cssref/default.asp<Cr><Cr>

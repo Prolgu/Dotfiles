@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# This script will compile LaTeX every time you save a file in neovim.
+# And will make you be able to open your pdf viewer by using keystroke. (Will open last compiled document.)
+
+
+## Functions
+# Function which will show help.
+help(){
+    printf "This script will compile LaTeX every time you save a file in neovim.\nAnd will make you be able to open your pdf viewer by using keystroke. (Will open last compiled document.)\nARGUMENTS:\n----------\n-h|--help: shows this message\n-l|--last: opens last compiled .tex file in your pdf viewer.\n"
+    exit 0
+}
+# Function which will show error message saying "no file compiled."
+faillastcompiled(){
+    printf "No file compiled.\n" && notify-send "No file compiled." && exit 1
+}
+# Function which will open last compiled document.
+openlastcompiled(){
+    lastcompiled=$(cat /tmp/lastcompiled) || faillastcompiled
+    printf "Opening last compiled document.\n"
+    zathura "$lastcompiled" >/dev/null 2>&1 &
+    exit 0
+}
+# Error function
+error(){
+    printf "ERROR!\n"
+    exit 1
+}
+
+# Arguments
+case "$1" in
+	-l|--last) openlastcompiled ;;
+	-h|--help) help ;;
+esac
+
+# Check if file was inputed.
+[ -z "$1" ] && printf "No file inputed.\n" && exit 1
+
+# Compile document
+pdflatex "$1" || error
+
+# Remove extension and put that in /tmp/lastcompiled
+noextension=$(echo $1 | awk -F"." '{print $1}')
+echo "$(pwd)/$noextension.pdf" > /tmp/lastcompiled

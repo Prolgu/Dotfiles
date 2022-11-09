@@ -1,0 +1,18 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\title{}
+\author{{{NAME}}}
+\date{\today}
+
+\begin{document}
+    \begin{titlepage}
+        \maketitle
+    \end{titlepage}
+
+{{HERE}}
+
+\end{document}

@@ -4,36 +4,32 @@
 
 
 "============================================="
-set ts=4 sts=4 sw=4 et
+set ts=2 sts=2 sw=2 et
 set bs=indent,eol,start
+" set smartindent
 " set so=999
+" colorscheme monokai
+" colorscheme monokai_pro
+" colorscheme monokai_soda
+" colorscheme monokai_ristretto
 "============================================="
+
+inoremap <buffer> ~n ñ
+inoremap <buffer> ~a á
+inoremap <buffer> ~e é
+inoremap <buffer> ~i í
+inoremap <buffer> ~o ó
+inoremap <buffer> ~u ú
 
 "================= Map-Zone =================="
 
 " Documentacion de referenciat w3schools/Python
 nnoremap <buffer> <F1> :w <bar> :!xdg-open https://www.w3schools.com/python/python_reference.asp<Cr><Cr>
 " Terminal interactiva
-nnoremap <buffer> <F5> :w <bar> :PyCMD<Cr>
+" nnoremap <buffer> <F5> :w <bar> :PyCMD<Cr>
 
 "=============== Autocompletar ==============="
 
-" inoremap <buffer>( ()<Esc>i
-" inoremap <buffer>[ []<Esc>i
-" inoremap <buffer>' ''<Esc>i
-" inoremap <buffer>" ""<Esc>i
-" inoremap <buffer>{ {}<Esc>i
-" inoremap <buffer>{<Cr> {<Cr>}<Esc>O
-" inoremap <buffer>< <><Esc>i
-
-" add mapping for auto closing
-imap <buffer>"<tab> ""<Left>
-imap <buffer>'<tab> ''<Left>
-imap <buffer>(<tab> ()<Left>
-imap <buffer>[<tab> []<Left>
-imap <buffer>{<tab> {}<Left>
-imap <buffer>{<CR> {<CR>}<ESC>O
-" imap <buffer>{;<CR> {<CR>};<ESC>O
 
 " wrap the current line in (), e.g:
 " nnoremap (( mMI(<esc>A)<esc>`M

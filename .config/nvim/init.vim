@@ -1,263 +1,105 @@
-" Mi NVimRC ===================================================
-" =============================================================
+" NOTE:
+
+" Share2bin {{{============================
+
+" command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1 | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% TB <line1>,<line2>w !nc termbin.com 9999 | tr -d '\n' | xclip -i -selection clipboard
+command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us | tr -d '\n' | xargs firefox
+
+" }}}
+
+" Floaterm {{{=============================
+
+" Terminales para lenguajes(<F5>)
+" silent command! PyCMD  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (python %)
+" silent command! JsCMD  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (node %)
+" silent command! LuaCMD :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (lua %)
+" silent command! ShCMD  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (bash %)
+" silent command! CCMD   :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (clear && gcc % -o %< && ./%<)
+" silent command! CppCMD :FloatermNew --wintype=top --width=200 --height=200 --position=center (clear && g++ % -o %< && ./%<)
+" silent command! CppMAKE :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (g++ % -o %<)
+" silent command! RustCMD :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (clear && rustc % && ./%<)
+" silent command! ClCMD  :FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (clisp %)
+
+silent command! CargoRun :w <Bar> FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (cargo run)
+silent command! CargoCheck :w <Bar> FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (cargo check)
+silent command! CargoBuild :w <Bar> FloatermNew --wintype=normal --width=0.5 --height=0.4 --position=center (cargo build)
+
+" }}}
+
+" modelines {{{=======================================
+
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+" function! AppendModeline()
+"   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+"         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+"   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+"   call append(line("$"), l:modeline)
+" endfunction
+
+
+" }}}
+
+
+" Local TODO {{{
+
+" function! ToggleQuickFix()
+"   if empty(filter(getwininfo(), 'v:val.quickfix'))
+"     copen
+"   else
+"     cclose
+"   endif
+" endfunction
+
+" command! -bar LTODO :vimgrep /\v\CTODO|FIXME|HACK|NOTE|DEV/g % <Cr> <bar> :copen
+" function! ToggleQuickFix()
+"   if exists("g:qwindow")
+"     lclose
+"     unlet g:qwindow
+"   else
+"     try
+"       lopen 10
+"       let g:qwindow = 1
+"     catch
+"       echo "No Errors found!"
+"     endtry
+"   endif
+" endfunction
+
+" nnoremap <silent> <F3> :TodoQuickFix<cr>
+" nnoremap <silent> <F3> :TodoQuickFix<cr><bar>call ToggleQuickFix()<cr>
+
+"}}}
+
+" default
+" +--  7 lines: set foldmethod=indent··············
 "
-"     ██╗ ███╗   ██╗ ██╗████████╗ ██╗   ██╗ ██╗ ███╗   ███╗
-"     ██║ ████╗  ██║ ██║╚══██╔══╝ ██║   ██║ ██║ ████╗ ████║
-"     ██║ ██╔██╗ ██║ ██║   ██║    ██║   ██║ ██║ ██╔████╔██║
-"     ██║ ██║╚██╗██║ ██║   ██║    ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║
-"     ██║ ██║ ╚████║ ██║   ██║ ██╗ ╚████╔╝  ██║ ██║ ╚═╝ ██║
-"     ╚═╝ ╚═╝  ╚═══╝ ╚═╝   ╚═╝ ╚═╝  ╚═══╝   ╚═╝ ╚═╝     ╚═╝
-"      
-" =============================================================
-" =============================================================
+" new
+" ⏤⏤⏤⏤► [7 lines]: set foldmethod=indent ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤
+"
+" Folding {{{=========================================
 
+function! CustomFolding() abort
+  let l:start_arrow = '--> '
+  let l:lines='[' . (v:foldend - v:foldstart + 1) . ' lines]'
+  let l:first_line=substitute(getline(v:foldstart), '\v *', '', '')
+  return l:start_arrow . l:lines . ': ' . l:first_line . ' '
+endfunction
 
-
-" Au Plug.vim install {{{ ====================================
-
-filetype off
-
-if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
-  echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !mkdir -p ~/.config/nvim/autoload/
-  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
-
-
-filetype plugin indent on
+" set foldtext=CustomFolding()
 
 " }}}
 
-" Plug-in {{{ ==================================================
 
-call plug#begin('~/.config/nvim/plugged')
-" Theming ====================
-" Plug 'tomasr/molokai'   " Mi tema favorito
-Plug 'morhetz/gruvbox'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" Plug 'akinsho/nvim-bufferline.lua'    "Bufferline en lua
-Plug 'glepnir/dashboard-nvim'
-
-" Plug 'mhinz/vim-startify'     " Startify
-" Varios ====================
-Plug 'vim-scripts/loremipsum',{'for':'html'}    " Generador lorem
-Plug 'szw/vim-g'              " Google searcher
-Plug 'tpope/vim-fugitive'     " Git Wrapper
-Plug 'tpope/vim-commentary'   " Para comentar 
-Plug 'voldikss/vim-floaterm'  " Terminal Flotante
-Plug 'ryanoasis/vim-devicons' " Iconos Varios
-Plug 'sheerun/vim-polyglot'   " Syntax Highlight
-" MVPlug ====================
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy Finder
-Plug 'junegunn/fzf.vim'       " Fuzzy Finder
-
-Plug 'skywind3000/asyncrun.vim' " Ejecucion asincrona
-Plug 'skywind3000/asyncrun.extra' " Extras 
-
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}  " autocompletado,etc
-Plug 'honza/vim-snippets'   " Snippets
-Plug 'kyazdani42/nvim-web-devicons'   " Nvim Icons en lua
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'neovim/nvim-lspconfig'
-Plug 'simnalamburt/vim-mundo' "Undo tree
-Plug 'hrsh7th/nvim-compe'
-
-Plug 'karb94/neoscroll.nvim' " Fast and smooth scroll
-
-Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " Markdown preview
-" Plug 'turbio/bracey.vim',{'do': 'npm install --prefix server'}
-
-call plug#end()
-
-" }}}
-
-" Lua-Call {{{ =================================================
-
-" lua require('line')
-" lua require('buffy')
-lua require('map')
-lua require('tree')
-lua require('lsp')
-lua require('neoscr')
-
-" }}}
-
-" General {{{ ==================================================
-
-" set termguicolors
-" colorscheme molokai
-colorscheme gruvbox
-" set t_Co=256
-" set updatetime=100 timeout timeoutlen=500 ttimeout ttimeoutlen=50
-
-" autocmd VimEnter,WinEnter * let &scrolloff = winheight(0) / 4
-" au TermOpen *fzf* :tnoremap <buffer>
-
-" hi! link FoldColumn Folded
-" hi! link CursorColumn	CursorLine
-" hi! link NonText LineNr
-
-" }}}
-
-" Definitions {{{ ==============================================
-
-" Various ====================
-let g:netrw_banner=0
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
-let g:netrw_liststyle = 3
-let g:netrw_altfile=1
-let g:netrw_winsize=20
-" let g:netrw_browse_split=0
-
-
-let g:loaded_matchit = 1
-" let g:molokai_original = 1 
-
-let g:python3_host_prog=expand('/usr/bin/python3')
-let g:loaded_node_provider = 1
-
-" Gruvbox ==================
-let g:gruvbox_bold=1
-let g:gruvbox_italic=1
-let g:gruvbox_underline=1
-
-" Vim-G ====================
-let g:vim_g_command = "Go"
-let g:vim_g_f_command = "Gfi"
-let g:vim_g_query_url = "http://google.com/search?q="
-let g:vim_g_open_command = "xdg-open"
-
-
-" Mundo tree ===============
-let g:mundo_preview_bottom=1
-let g:mundo_right=1
-let g:mundo_width = 30
-let g:mundo_preview_height = 15
-
-" Bracey    ================
-let g:bracey_browser_command='luakit'
-let g:bracey_refresh_on_save=1
-let g:bracey_server_port='8080'
-
-
-" UltiSnips ================
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger='<tab>'
-
-" shortcut to go to next position
-let g:UltiSnipsJumpForwardTrigger='<c-j>'
-
-" shortcut to go to previous position
-let g:UltiSnipsJumpBackwardTrigger='<c-k>'
-
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" }}}
-
-" Remember cursor position {{{ =================================
-
-autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
-
-" }}}
-
-" Transparencia en pmenu y floaterm {{{ ========================
-
-if exists('&pumblend')
-  set pumblend=10
-  " set winblend=85
-  hi PmenuSel blend=10
-endif
-
-"}}}
-
-" Nornu noruler en fzf {{{ =====================================
-
-if has('nvim') && !exists('g:fzf_layout')
-  autocmd! FileType fzf
-  autocmd  FileType fzf set nornu noruler
-        \| autocmd BufLeave <buffer> set rnu ruler
-endif
-
-"}}}
-
-" Autocmd {{{ ==================================================
-" CapsLock is esc now 
-au VimEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au VimLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-
-autocmd InsertEnter * :set nornu
-autocmd InsertLeave * :set rnu
-
-" autocmd FileType DashBoard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
-
-" autocmd BufWinEnter,WinEnter term://* startinsert
-" autocmd BufLeave term://* stopinsert
-autocmd TermOpen * startinsert
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-au BufRead,BufNewFile *.md setlocal textwidth=80
-" autocmd FileType dashboard setlocal showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
-
-" }}}
-
-" Augroup {{{ ==================================================
-
-" hi WildMenu guibg=DarkGray
-" autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-augroup initvim-syncformat
-  autocmd!
-  autocmd BufEnter * :syntax sync fromstart
-augroup END
-
-
-augroup FileTypeAutocmds
-  au!
-  au FileType help setlocal nonumber
-  au FileType * set formatoptions-=cro
-augroup END
-
-
-
-" augroup rooter
-"   autocmd!
-"   autocmd BufRead * silent! lcd %:p:h
-" augroup END
-
-" add highlight to rofi files
-au BufReadPost *.rasi set syntax=css
-
-augroup CocExplorerCustom
-  autocmd!
-  " autocmd FileType coc-explorer setlocal relativenumber
-  autocmd BufEnter coc-explorer
-        \ if &ft == 'coc-explorer'
-        \ | call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
-        \ | endif
-augroup END
-
-
-"}}}
-
-" If(nvim) {{{==================================================
-
-if has("nvim")
-  au TermOpen * tnoremap <Esc> <c-\><c-n>
-  au TermEnter * setlocal scrolloff=0 signcolumn=no
-  au TermLeave * setlocal scrolloff=999 signcolumn=yes
-  au FileType fzf tunmap <Esc>
-endif
-
-" }}}
-
-" command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-
-" vim:fileencoding=utf-8:ft=vim:foldmethod=marker
+lua require('plugin')
+lua require('init')
+lua require('maps')
+lua require('options')
+lua require('functions')
