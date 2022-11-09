@@ -1,120 +1,128 @@
-# vim:fileencoding=utf-8:ft=sxhkdrc:foldmethod=marker
-
-# varios{{{1
-
-super + m
-  bspc desktop -l next
+#
+# wm independent hotkeys
+#
 
 # terminal emulator
+# super + Return
+# 	st
+
 super + Return
-		st -e tmux new-session -A -s ws
+    emacsclient -c -n -e '(vterm) (switch-to-buffer "'"vterm"'")'
+    # ~/.scripts/vterm-caller.sh
 
-super + shift + Return
-		st 	
-
+# Open Tabbed
 # super + shift + Return
-# 		tabbed -c -r 2 st -w ""	
+# 	tabbed
 
-#dmenu
-super + b
-  dmenu_run
+# Add focused window to a tabbed instance in given direction
+# super + t; {h,j,k,l}
+#     tabc add $(bspc query -N -n focused) $(bspc query -N -n focused)
+
+# Remove one tab from tabbed
+# super + t; r
+#     tabc remove-child $(bspc query -N -n focused)
+
+# add to tabbed container
+ctrl + alt + {Left,Down,Up,Right}
+    tabc attach $(bspc query -N -n) {$(bspc query -N -n west),$(bspc query -N -n south),$(bspc query -N -n north),$(bspc query -N -n east)}
+
+# create/remove from tabbed container
+super + z
+    id=$(bspc query -N -n); \
+    [[ "$(tabc printclass $id)" == "tabbed" ]] \
+    && tabc detach $id \
+    || tabc create $id
+
+# toggle autoattach in tabbed container
+super + shift + z
+    tabc autoattach $(bspc query -N -n)
+
+
+# super + e
+# 	~/.scripts/daemon-check.sh
+
+# super + shift + e
+# 	~/.scripts/remackie.sh
+
+super + {e, shift + e, ctrl + e}
+	~/.scripts/mackie-helper.sh -{l,k,r}
 
 # program launcher
+super + r
+	rofi -modi drun -show drun -line-padding 4 \
+                -columns 2 -padding 50 -hide-scrollbar -terminal st \
+                -show-icons -drun-icon-theme "Arc-X-D" -font "Droid Sans Regular 10"
 
+# show open window
+super + ctrl + r
+	rofi -modi drun -show window -line-padding 4 \
+                -columns 2 -padding 50 -hide-scrollbar -terminal st \
+                -show-icons -drun-icon-theme "Arc-X-D" -font "Droid Sans Regular 10"
 
-super + a
-	 ~/.config/rofi/scripts/backlight.sh
+# show ssh sesssions
+super + shift + r
+	rofi -modi drun -show ssh -line-padding 4 \
+                -columns 2 -padding 50 -hide-scrollbar -terminal st \
+                -show-icons -drun-icon-theme "Arc-X-D" -font "Droid Sans Regular 10"
+
+# power-menu
+super + p
+     ~/.config/rofi/applets/android/powermenu.sh
 
 # make sxhkd reload its configuration files:
-super + shift + r
-	pkill -USR1 -x sxhkd
+super + Escape
+	pkill -USR1 -x sxhkd ; notify-send 'SXHKD' 'Reload config'
 
-super + shift + e
-   bspc wm -r
-
-
-#telegram desktop
-super + a
-	telegram-desktop
-
-#polybar
-super + x
-     polybar top-panel
-
-#kill polybar
-#super + m
-#     killall -q polybar
-
-#picom
-super + p
-     picom
-
-#kill picom
-super + n
-    killall -q picom
-
-#rofi
-super + c
-		rofi -show drun
-super + r
-		rofi -show drun
-
-
-# bspwm hotkeys {{{1
+#
+# bspwm hotkeys
 #
 
 # quit/restart bspwm
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
+super + ctrl + q
+	~/.config/rofi/applets/android/powermenu.sh
+
 # close and kill
 super + {_,shift + }q
 	bspc node -{c,k}
 
-#fullscreen screenshot save
-
-super + Print
-    maim "/home/$USER/Pictures/$(date)"
-
-#cropped save
-super + shift + x
-    maim --select "/home/$USER/Pictures/$(date)"
-
-#  clipboard fullscreen
-super + u
-    maim | xclip -selection clipboard -t image/png
-
-# clipboard cropped
-super + shift + u
-    maim --select | xclip -selection clipboard -t image/png
-
-
-
 # alternate between the tiled and monocle layout
-# super + Tab
-# 	bspc desktop -l next
+super + m
+	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest node
+# swap the current node and the biggest window
 super + g
-	bspc node -s biggest
+	bspc node -s biggest.window
 
+#blank space
+super + alt + space
+  {smartsplit ; bspc node -i,\
+  for i in $(bspc query -N -n .leaf.!window.local); do bspc node $i -k; done}
 
-# state/flags{{{1
+#Cycle Layouts
+# super + @space
+# 	bspc-layout cycle --layouts tall,rgrid,wide
+
+#
+# state/flags
 #
 
 # set the window state
-super + {d,shift + d,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+# super + {t,shift + t,s,f}
+# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-# focus/swap{{{1
+#
+# focus/swap
 #
 
 # focus the node in the given direction
@@ -125,9 +133,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous node in the current desktop
+# focus the next/previous window in the current desktop
 super + {_,shift + }c
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -147,11 +155,8 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-# Send to monitor
-super + shift + equal
-    bspc node -m last --follow
-
-# preselect{{{1
+#
+# preselect
 #
 
 # preselect the direction
@@ -170,7 +175,8 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-# move/resize{{{1
+#
+# move/resize
 #
 
 # expand a window by moving one of its side outward
@@ -184,44 +190,53 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+#
+# Special hotkeys
+#
 
-super + space
-	ulauncher --no-window-shadow
-
-super + s :{h,j,k,l}
-    STEP=20; SELECTION={1,2,3,4}; \
-    bspc node -z $(echo "left -$STEP 0,bottom 0 $STEP,top 0 -$STEP,right $STEP 0" | cut -d',' -f$SELECTION) || \
-    bspc node -z $(echo "right -$STEP 0,top 0 $STEP,bottom 0 -$STEP,left $STEP 0" | cut -d',' -f$SELECTION)
-
-super + w
-		firefox
-
-super + shift + w
-		luakit
-
-super + f
-		Thunar
-
-# XF86AudioRaiseVolume
-# 		amixer -q set %s 1%%+
-# XF86AudioLowerVolume
-# 		amixer -q set %s 1%%-
-# XF86AudioMute
-# 		amixer -q set %s toggle
-
-
+# Multimedia keys
 XF86AudioRaiseVolume
-		amixer set Master 1%+
+    amixer -D pulse sset Master 1%+
+  # amixer -q set Master 5%+ unmute
+
+# Still muøltimedia
 XF86AudioLowerVolume
-		amixer set Master 1%-
+    amixer -D pulse sset Master 1%-
+  # amixer -q set Master 5%- unmute
+
+# still
 XF86AudioMute
-		amixer set Master toggle
+  amixer -D pulse sset Master toggle-mute
 
+# amixer -q set Master toggle
+# Simple amixer command seems to have problems unmuting device
+
+# Brightness up
 XF86MonBrightnessUp
-    xbacklight -inc 2
+  xbacklight -inc 1
 
+# And brightness down
 XF86MonBrightnessDown
-    xbacklight -dec 2
+  xbacklight -dec 1
+
+# Screenshot
+Print
+	~/.scripts/noti-ScrSht.sh
+  # scrot ~/Imágenes/Screenshot-$(date +%F_%T).png
+
+super + Print
+	flameshot gui
+  # ~/.config/bspwm/scripts/screenshot.sh
 
 
+# Shortcuts
+super + w
+  firefox
 
+super + n
+  thunar
+
+super + F1
+  ~/.config/bspwm/scripts/keybindings_rofi.sh
+
+#  vim: set ts=8 sw=8 tw=0 noet ft=sh:
